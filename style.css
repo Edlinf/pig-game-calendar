@@ -56,6 +56,20 @@ button, select, a { touch-action: manipulation; }
 details p { color: var(--muted); }
 .game-tile:hover { background: #dfe5eb; }
 .deadline-strip { background: var(--panel); }
+.deadline-strip button {
+  background: #e0e5ea;
+  border: 1px solid #8c98a7;
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 8px 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.deadline-strip button:hover {
+  background: #d6dde5;
+  border-color: var(--accent);
+}
 .event-state { color: #38664f; }
 .event-state.urgent { color: #b6382a; }
 .event-date, .deadline-period { color: var(--muted); }
