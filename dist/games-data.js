@@ -2,9 +2,9 @@
 // A boundaryDate marks a maintenance day, never an invented exact cutoff.
 const GAMES=[
 {id:'wow',name:'魔兽世界',short:'魔兽',en:'WORLD OF WARCRAFT',color:'#dbb878',region:'国服 · 正式服',checked:'2026-10-04',source:'https://wow.blizzard.cn/',note:'保留团本、大秘境和时光漫游攻略。国服本周漫游轮换仍待核实。'},
-{id:'ff14',name:'最终幻想14',short:'FF14',en:'FINAL FANTASY XIV',color:'#82b9ef',region:'国服',checked:'2026-10-09',source:'https://ff.web.sdo.com/web8/index.html#/newstab/newslist',note:'已逐条复核近期国服公告，补入FF15、莫古莫古大收集、守护天节和月卡活动；妖怪手表归入已结束。10月13日14:00—18:00维护，FF15最后一天请提前安排。莫古莫古第2阶段与兑换版本的确切日期待公告；黄金的试炼第84期已核对，挑战与网页登记分别列出。'},
+{id:'ff14',name:'最终幻想14',short:'FF14',en:'FINAL FANTASY XIV',color:'#82b9ef',region:'国服',checked:'2026-10-09',source:'https://ff.web.sdo.com/web8/index.html#/newstab/newslist',note:'已逐条复核近期国服公告，补入FF15、莫古莫古大收集、守护天节和月卡活动；妖怪手表归入已结束。10月13日14:00—18:00维护，FF15最后一天请提前安排。莫古莫古第2阶段与兑换版本的确切日期待公告；黄金的试炼第84期已核对，网页登记截止见挑战活动详情。'},
 {id:'endfield',name:'明日方舟：终末地',short:'终末地',en:'ARKNIGHTS: ENDFIELD',color:'#d6dd79',region:'国服',checked:'2026-10-09',source:'https://endfield.hypergryph.com/news',note:'部分活动截止于版本维护前；10月15日为已公布的更新日，精确维护时刻待公告。'},
-{id:'arknights',name:'明日方舟',short:'方舟',en:'ARKNIGHTS',color:'#edaa76',region:'国服',checked:'2026-10-09',source:'https://ak.hypergryph.com/',note:'关卡、寻访和兑换截止分别列出。官网正文访问受限的条目使用 PRTS / BWIKI 公告转载核对，并附官方入口。'},
+{id:'arknights',name:'明日方舟',short:'方舟',en:'ARKNIGHTS',color:'#edaa76',region:'国服',checked:'2026-10-09',source:'https://ak.hypergryph.com/',note:'关卡与寻访独立列出，兑换截止保留在主体活动详情。官网正文访问受限的条目使用 PRTS / BWIKI 公告转载核对，并附官方入口。'},
 {id:'fgo',name:'Fate/Grand Order',short:'FGO',en:'FATE / GRAND ORDER',color:'#b9a7eb',region:'国服 · 简中',checked:'2026-10-09',source:'https://game.bilibili.com/fgo/news.html',note:'使用 Mooncell 明确标注的国服北京时间；本次国服官网未返回公告正文，条目标为 Wiki 核对。'}
 ];
 const GAME_EVENTS=EVENTS.map(e=>({...e,game:'wow',type:e.milestone?'版本节点':'活动',verification:e.confirmed?'国服公告核对':'国服排期待核实'}));

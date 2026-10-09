@@ -1,6 +1,6 @@
 const app=document.getElementById('app');
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-let selected=today,month=+today.slice(5,7)-1,year=+today.slice(0,4),mode='detail',role=-1,boss=0,dungeon=0,tw='dungeons',eventFilter='confirmed',scope='home',lastFocus=null;
+let selected=today,month=+today.slice(5,7)-1,year=+today.slice(0,4),mode='detail',role=-1,boss=0,dungeon=0,tw='dungeons',eventFilter='confirmed',scope='home',lastFocus=null,deadlineGame='all',deadlineRefreshAt=Infinity;
 const roleNames=['坦克','治疗','输出'];
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ext=(url,label)=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
@@ -15,7 +15,7 @@ function status(e,now=Date.now()){
  if(!e.confirmed)return '参考排期';
  if(e.milestone)return now<startTime(e)?'即将开放':'已到开放日期';
  if(now<startTime(e))return '即将开始';
- if(e.boundaryDate&&today>=e.boundaryDate)return '维护截止待复核';
+ if(e.boundaryDate&&dateAt(now)>=e.boundaryDate)return '维护截止待复核';
  if(now>=endTime(e))return '已结束';
  const hours=(endTime(e)-now)/3600000;
  if(hours<=24)return '24小时内结束';
@@ -40,8 +40,53 @@ function deadlineText(e){
 }
 function card(e,full=false){const g=game(e.game),st=status(e);return `<article class="event-card" style="--accent:${g.color}"><div class="event-meta"><span class="game-label">${g.short}</span><span class="badge ${e.confirmed?'':'pending'}">${e.type}</span><span class="event-state ${st.includes('结束')&&st!=='已结束'?'urgent':''}">${st}</span></div><h3 ${full?'id="event-title"':''}>${escapeHtml(e.name)}</h3><div class="event-date">${escapeHtml(dateText(e))}</div><p>${escapeHtml(e.desc)}</p>${full?`<dl class="event-info"><dt>参与条件</dt><dd>${escapeHtml(e.condition||'以当期游戏内与官方说明为准')}</dd><dt>主要奖励</dt><dd>${escapeHtml(e.rewards||e.desc)}</dd><dt>活动详情</dt><dd>${escapeHtml(e.detail)}</dd>${timingText(e)?`<dt>时间说明</dt><dd>${escapeHtml(timingText(e))}</dd>`:''}</dl>`:`<button data-event="${e.id}" class="detail-button">查看详情</button>`}<div class="source">${ext(e.source,'资料来源')}${e.official?' · '+ext(e.official,'官方公告入口'):''}<br>${e.verification} · 核对 ${e.checked||'2026-09-17'}</div></article>`}
 function wowNav(current='calendar'){return `<nav class="subnav" aria-label="魔兽世界内容">${[['wow','活动日历','calendar'],['raid','团队副本','raid'],['dungeon','大秘境','dungeon'],['timewalking','时光漫游','timewalking']].map(([path,label,key])=>`<a href="#${path}" class="${current===key?'active':''}">${label}</a>`).join('')}</nav>`}
-function gameTiles(){return `<div class="game-grid">${GAMES.map(g=>{const active=visibleEvents().filter(e=>e.game===g.id&&isActive(e));const upcoming=visibleEvents().filter(e=>e.game===g.id&&e.confirmed&&startTime(e)>Date.now()).sort((a,b)=>startTime(a)-startTime(b));return `<a class="game-tile" href="#${g.id}" style="--accent:${g.color}"><span class="game-code">${g.short}</span><h2>${g.name}</h2><span>${active.length} 项进行中</span><small>${upcoming.length?'下一节点 '+dateAt(startTime(upcoming[0])).slice(5).replace('-',' / '):'核对 '+g.checked.replaceAll('-','.')}</small></a>`}).join('')}</div>`}
 function deadlines(events){const cutoff=Date.now()+7*86400000;const list=events.filter(e=>e.confirmed&&!e.milestone&&isActive(e)&&endTime(e)<=cutoff).sort((a,b)=>endTime(a)-endTime(b)).slice(0,4);return list.length?`<section class="deadline-strip" aria-label="未来七天截止提醒"><strong>近期截止</strong>${list.map(e=>`<button data-event="${e.id}" style="--accent:${game(e.game).color}"><span>${game(e.game).short} · ${e.short}</span><time>${escapeHtml(deadlineText(e))}</time></button>`).join('')}</section>`:''}
+const clockAt=(time,seconds=false)=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',...(seconds?{second:'2-digit'}:{}),hourCycle:'h23'}).format(new Date(time));
+function deadlineInfo(e){
+ if(e.boundaryDate)return {date:e.boundaryDate,time:'维护前',note:'具体时刻待公告',precise:false};
+ if(!Number.isFinite(endTime(e)))return {date:'待公告',time:'',note:'',precise:false};
+ if(e.datePrecision==='day')return {date:e.lastDay,time:'具体时刻待公告',note:'',precise:false};
+ if(!e.endAt)return {date:e.end,time:'具体时刻待核实',note:e.confirmed?'':'参考排期',precise:false};
+ const official=(e.deadlineLabel||e.dateLabel?.split(' — ').at(-1)||'').match(/\b(\d{1,2}:\d{2}(?::\d{2})?)\b/);
+ const clock=official?.[1]||(e.timing?.includes('23:59:59')?'23:59:59':null);
+ let moment=endTime(e);
+ if(clock==='24:00')moment--;
+ else if(clock){const matched=[0,60000,1000].find(delta=>clockAt(endTime(e)-delta,clock.length>5)===clock);if(matched!==undefined)moment-=matched;}
+ return {date:dateAt(moment),time:clock||clockAt(moment),note:e.deadlineLabel?.includes('预计')?'预计':e.confirmed?'':'待核实',precise:!!e.confirmed};
+}
+function compareDeadlines(a,b){
+ const da=deadlineInfo(a).date,db=deadlineInfo(b).date;
+ // Unknown maintenance times sort at the end of their announced day; this is not an expiry time.
+ return (da===db?0:da==='待公告'?1:db==='待公告'?-1:da.localeCompare(db))||
+  ((a.boundaryDate||a.datePrecision==='day'?Infinity:endTime(a))-(b.boundaryDate||b.datePrecision==='day'?Infinity:endTime(b)))||a.id.localeCompare(b.id);
+}
+function homeEvents(){return visibleEvents().filter(e=>!e.milestone&&(deadlineGame==='all'||e.game===deadlineGame)&&(eventFilter==='all'||e.confirmed)).sort(compareDeadlines)}
+function countdownState(e,now=Date.now()){
+ if(endTime(e)<=now)return {value:'已结束',note:'',urgent:false};
+ if(!e.confirmed)return {value:'待核实',note:'参考排期',urgent:false};
+ if(e.boundaryDate||!Number.isFinite(endTime(e)))return {value:'待公告',note:'截止时刻',urgent:false};
+ if(e.datePrecision==='day'){
+  const days=Math.round((Date.parse(e.lastDay+'T00:00:00+08:00')-Date.parse(dateAt(now)+'T00:00:00+08:00'))/86400000);
+  return {value:days>0?days+' 天':'今天截止',note:'按公告日期',urgent:false};
+ }
+ if(!deadlineInfo(e).precise)return {value:'待核实',note:'截止时刻',urgent:false};
+ const seconds=Math.ceil((endTime(e)-now)/1000),pad=n=>String(n).padStart(2,'0');
+ return {value:pad(Math.floor(seconds/86400))+' 天 '+pad(Math.floor(seconds/3600)%24)+':'+pad(Math.floor(seconds/60)%60)+':'+pad(seconds%60),note:deadlineInfo(e).note==='预计'?'预计结束':'',urgent:seconds<=86400};
+}
+function countdownMarkup(e,now){const c=countdownState(e,now);return `<span class="countdown-value">${c.value}</span>${c.note?`<small>${c.note}</small>`:''}`}
+function deadlineTable(events,now,label){return `<div class="deadline-table-wrap"><table class="deadline-table"><caption class="sr-only">${label}，按截止时间从近到远排列，北京时间</caption><colgroup><col class="col-game"><col class="col-event"><col class="col-type"><col class="col-period"><col class="col-deadline"><col class="col-countdown"></colgroup><thead><tr><th scope="col">游戏</th><th scope="col">活动</th><th scope="col">类型</th><th scope="col">活动时间</th><th scope="col" aria-sort="ascending">截止时间</th><th scope="col">倒计时</th></tr></thead><tbody>${events.length?events.map(e=>{const g=game(e.game),info=deadlineInfo(e),c=countdownState(e,now);return `<tr data-deadline-row="${e.id}" style="--accent:${g.color}"><td data-label="游戏"><a class="deadline-game-name" href="#${g.id}" title="${escapeHtml(g.name)}">${g.short}</a></td><td data-label="活动"><button class="deadline-event-name" data-event="${e.id}">${escapeHtml(e.name)}</button><span class="deadline-state" data-event-state="${e.id}">${status(e,now)}</span></td><td data-label="类型">${escapeHtml(e.type)}</td><td data-label="活动时间" class="deadline-period">${escapeHtml(dateText(e))}</td><td data-label="截止时间" class="deadline-date"><strong>${escapeHtml(info.date)}</strong>${info.time?`<span>${escapeHtml(info.time)}</span>`:''}${info.note?`<small>${escapeHtml(info.note)}</small>`:''}</td><td data-label="倒计时" class="deadline-countdown${c.urgent?' urgent':''}" data-countdown="${e.id}" aria-live="off">${countdownMarkup(e,now)}</td></tr>`}).join(''):'<tr><td colspan="6" class="deadline-empty">暂无符合筛选条件的活动。</td></tr>'}</tbody></table></div>`}
+function deadlineHome(){
+ const now=Date.now(),events=homeEvents(),pending=events.filter(e=>endTime(e)>now),ended=events.filter(e=>endTime(e)<=now);
+ deadlineRefreshAt=Math.min(Infinity,...pending.map(endTime).filter(t=>Number.isFinite(t)));
+ app.innerHTML=`<section class="deadline-home"><div class="deadline-heading"><h1>Game Event Deadlines</h1><p>国服 · 北京时间（UTC+8）</p></div><div class="deadline-controls"><label for="deadline-game">游戏<select id="deadline-game"><option value="all"${deadlineGame==='all'?' selected':''}>全部游戏</option>${GAMES.map(g=>`<option value="${g.id}"${deadlineGame===g.id?' selected':''}>${g.name}</option>`).join('')}</select></label><div class="controls deadline-verification" aria-label="排期核对筛选"><button data-filter="confirmed" class="${eventFilter==='confirmed'?'on':''}" aria-pressed="${eventFilter==='confirmed'}">已核对排期</button><button data-filter="all" class="${eventFilter==='all'?'on':''}" aria-pressed="${eventFilter==='all'}">含待核实参考</button></div><span class="deadline-result-count">${pending.length} 项 · 截止从近到远</span></div>${deadlineTable(pending,now,'未结束活动')}${ended.length?`<details class="archive deadline-archive"><summary>已结束活动 · ${ended.length} 项</summary>${deadlineTable(ended,now,'已结束活动')}</details>`:''}<details class="deadline-coverage"><summary>资料核对</summary><section class="panel coverage">${GAMES.filter(g=>deadlineGame==='all'||g.id===deadlineGame).map(g=>`<div class="coverage-row"><strong style="color:${g.color}">${g.name}</strong><p>${g.note}</p><span>${ext(g.source,'公告入口')} · 核对 ${g.checked}</span></div>`).join('')}</section></details></section>`;
+}
+function tickDeadlines(){
+ if(scope!=='home')return;
+ const now=Date.now();
+ if(now>=deadlineRefreshAt){deadlineHome();return;}
+ document.querySelectorAll('[data-countdown]').forEach(node=>{const e=GAME_EVENTS.find(e=>e.id===node.dataset.countdown);if(!e)return;node.innerHTML=countdownMarkup(e,now);node.classList.toggle('urgent',countdownState(e,now).urgent)});
+ document.querySelectorAll('[data-event-state]').forEach(node=>{const e=GAME_EVENTS.find(e=>e.id===node.dataset.eventState);if(e)node.textContent=status(e,now)});
+}
 const shiftDay=(date,days)=>new Date(Date.parse(date+'T00:00:00Z')+days*86400000).toISOString().slice(0,10);
 function calendarWeeks(events){
  const first=new Date(Date.UTC(year,month,1));
@@ -85,31 +130,33 @@ function calendar(){
  const upcoming=events.filter(e=>e.confirmed&&startTime(e)>Date.now()).sort((a,b)=>startTime(a)-startTime(b));
  const active=events.filter(isActive).sort((a,b)=>endTime(a)-endTime(b));
  const ended=events.filter(e=>!e.milestone&&endTime(e)<=Date.now());
- app.innerHTML=(scope==='wow'?wowNav():'')+heading(g?g.en:'GAME CALENDAR',g?g.name+' · 活动日历':'活动总览',g?g.region+' · 北京时间 · 核对 '+g.checked:'五款游戏 · 国服 · 北京时间')+(scope==='home'?gameTiles():'')+deadlines(events)+`<div class="layout"><section class="panel calendar-panel"><div class="between"><h2>${year} 年 ${month+1} 月</h2><div class="month-controls"><button data-month="-1" aria-label="上个月">‹</button><button data-today>今天</button><button data-month="1" aria-label="下个月">›</button></div></div><div class="controls calendar-filters"><button data-filter="confirmed" class="${eventFilter==='confirmed'?'on':''}" aria-pressed="${eventFilter==='confirmed'}">已核对排期</button><button data-filter="all" class="${eventFilter==='all'?'on':''}" aria-pressed="${eventFilter==='all'}">含待核实参考</button><span>${events.length} 个已收录条目</span></div>${monthView}<p class="calendar-help">点日期查看全部活动，点色条查看详情与奖励截止提醒。</p></section><aside class="selected-day"><section class="panel gold"><div class="eyebrow">当日活动 · ${onDay.length} 项</div><h2>${selected.replaceAll('-',' / ')}</h2>${onDay.length?onDay.map(e=>card(e)).join(''):'<p class="empty">该日暂无已收录活动。</p>'}</section></aside></div><section class="event-section"><div class="between"><h2>正在进行</h2><span class="muted">${active.length} 项</span></div><div class="cards">${active.length?active.map(e=>card(e)).join(''):'<p class="empty">暂无已核对的进行中活动。</p>'}</div></section>${upcoming.length?`<section class="event-section"><h2>即将开始与解锁</h2><div class="cards">${upcoming.map(e=>card(e)).join('')}</div></section>`:''}${ended.length?`<details class="archive"><summary>近期已结束 · ${ended.length} 项</summary><div class="cards">${ended.map(e=>card(e)).join('')}</div></details>`:''}<section class="panel coverage"><h2>资料核对</h2>${(g?[g]:GAMES).map(x=>`<div class="coverage-row"><strong style="color:${x.color}">${x.name}</strong><p>${x.note}</p><span>${ext(x.source,'公告入口')} · 核对 ${x.checked}</span></div>`).join('')}</section>${scope==='wow'?`<div class="cards"><a class="card" href="#raid"><h2>烈毒之渊与潮缚石窟</h2><p>首领技能、阶段流程与三职责速查</p></a><a class="card" href="#dungeon"><h2>本季大秘境</h2><p>八座地下城的打断、驱散与首领处理</p></a><a class="card" href="#timewalking"><h2>时光漫游</h2><p>地下城与漫游团本备战资料</p></a></div>`:''}`;
+ app.innerHTML=(scope==='wow'?wowNav():'')+heading(g?g.en:'GAME CALENDAR',g?g.name+' · 活动日历':'活动总览',g?g.region+' · 北京时间 · 核对 '+g.checked:'五款游戏 · 国服 · 北京时间')+deadlines(events)+`<div class="layout"><section class="panel calendar-panel"><div class="between"><h2>${year} 年 ${month+1} 月</h2><div class="month-controls"><button data-month="-1" aria-label="上个月">‹</button><button data-today>今天</button><button data-month="1" aria-label="下个月">›</button></div></div><div class="controls calendar-filters"><button data-filter="confirmed" class="${eventFilter==='confirmed'?'on':''}" aria-pressed="${eventFilter==='confirmed'}">已核对排期</button><button data-filter="all" class="${eventFilter==='all'?'on':''}" aria-pressed="${eventFilter==='all'}">含待核实参考</button><span>${events.length} 个已收录条目</span></div>${monthView}<p class="calendar-help">点日期查看全部活动，点色条查看详情与奖励截止提醒。</p></section><aside class="selected-day"><section class="panel gold"><div class="eyebrow">当日活动 · ${onDay.length} 项</div><h2>${selected.replaceAll('-',' / ')}</h2>${onDay.length?onDay.map(e=>card(e)).join(''):'<p class="empty">该日暂无已收录活动。</p>'}</section></aside></div><section class="event-section"><div class="between"><h2>正在进行</h2><span class="muted">${active.length} 项</span></div><div class="cards">${active.length?active.map(e=>card(e)).join(''):'<p class="empty">暂无已核对的进行中活动。</p>'}</div></section>${upcoming.length?`<section class="event-section"><h2>即将开始与解锁</h2><div class="cards">${upcoming.map(e=>card(e)).join('')}</div></section>`:''}${ended.length?`<details class="archive"><summary>近期已结束 · ${ended.length} 项</summary><div class="cards">${ended.map(e=>card(e)).join('')}</div></details>`:''}<section class="panel coverage"><h2>资料核对</h2>${(g?[g]:GAMES).map(x=>`<div class="coverage-row"><strong style="color:${x.color}">${x.name}</strong><p>${x.note}</p><span>${ext(x.source,'公告入口')} · 核对 ${x.checked}</span></div>`).join('')}</section>${scope==='wow'?`<div class="cards"><a class="card" href="#raid"><h2>烈毒之渊与潮缚石窟</h2><p>首领技能、阶段流程与三职责速查</p></a><a class="card" href="#dungeon"><h2>本季大秘境</h2><p>八座地下城的打断、驱散与首领处理</p></a><a class="card" href="#timewalking"><h2>时光漫游</h2><p>地下城与漫游团本备战资料</p></a></div>`:''}`;
 }
 function openEvent(id){const e=GAME_EVENTS.find(x=>x.id===id);if(!e)return;lastFocus=document.activeElement;document.getElementById('event-detail').innerHTML=`<div class="dialog-top"><span>${game(e.game).name} · ${game(e.game).region}</span><button data-closeevent aria-label="关闭活动详情">关闭</button></div>${card(e,true)}`;document.getElementById('event-dialog').showModal()}
 function render(){
  const route=location.hash.slice(1).split('/'),key=route[0]||'home';scope=['raid','dungeon','timewalking','calendar'].includes(key)?'wow':game(key)?key:'home';
  document.body.dataset.game=scope;document.documentElement.style.setProperty('--accent',game(scope)?.color||'#dbb878');
  document.querySelectorAll('header nav a').forEach(a=>{const yes=a.hash==='#'+scope;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
- document.title=`游戏活动手册 · ${game(scope)?.name||'活动总览'}`;
+ document.title=`游戏活动手册 · ${game(scope)?.name||'Game Event Deadlines'}`;
  if(key==='raid'){boss=Math.max(0,Math.min(8,Number(route[1])||0));guide('raid');app.insertAdjacentHTML('afterbegin',wowNav('raid'))}
  else if(key==='dungeon'){dungeon=Math.max(0,Math.min(7,Number(route[1])||0));guide('dungeon');app.insertAdjacentHTML('afterbegin',wowNav('dungeon'))}
  else if(key==='timewalking'){timewalking();app.insertAdjacentHTML('afterbegin',wowNav('timewalking'))}
+ else if(scope==='home')deadlineHome();
  else calendar();
 }
 app.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
  if(d.month){month+=Number(d.month);if(month<0){month=11;year--}if(month>11){month=0;year++}calendar()}
  if('today'in d){selected=today;year=+today.slice(0,4);month=+today.slice(5,7)-1;calendar()}
  if(d.date){selected=d.date;calendar()}
- if(d.filter){eventFilter=d.filter;calendar()}
+ if(d.filter){eventFilter=d.filter;scope==='home'?deadlineHome():calendar()}
  if(d.event)openEvent(d.event);
  if(d.guide!==undefined)location.hash=(location.hash.startsWith('#raid')?'raid/':'dungeon/')+d.guide;
  if(d.mode){mode=d.mode;render()}
  if(d.role!==undefined){role=+d.role;render()}
  if(d.tw){tw=d.tw;render()}
 });
+app.addEventListener('change',e=>{if(e.target.id==='deadline-game'){deadlineGame=GAMES.some(g=>g.id===e.target.value)?e.target.value:'all';deadlineHome();document.getElementById('deadline-game').focus()}});
 const dialog=document.getElementById('event-dialog');
 dialog.addEventListener('click',e=>{if(e.target.closest('[data-closeevent]')||e.target===dialog)dialog.close()});
 dialog.addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus()});
-window.addEventListener('hashchange',()=>{dialog.close();render();window.scrollTo({top:0})});render();
+window.addEventListener('hashchange',()=>{dialog.close();render();window.scrollTo({top:0})});render();setInterval(tickDeadlines,1000);
