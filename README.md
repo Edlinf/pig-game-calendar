@@ -1,10 +1,12 @@
 # 游戏活动手册
 
-五款游戏的中文国服活动日历：首页为 Game Event Deadlines 截止汇总表，可选择游戏，按活动截止时间从近到远排列，显示截止时间与实时倒计时。游戏页面按魔兽世界、最终幻想14、明日方舟：终末地、明日方舟和 Fate/Grand Order 分开，使用连续色条月历。原有魔兽团本、大秘境和时光漫游职责攻略保留。
+六款游戏的中文国服活动日历：首页为 Game Event Deadlines 截止汇总表，可选择游戏，按活动截止时间从近到远排列，显示截止时间与实时倒计时。游戏页面按魔兽世界、最终幻想14、明日方舟：终末地、明日方舟、Fate/Grand Order 和原神分开，使用连续色条月历。原有魔兽团本、大秘境和时光漫游职责攻略保留。
 
-站点：https://azeroth-field-guide.edlinf-zyj.chatgpt.site
+站点：https://edlinf.github.io/pig-game-calendar/
 
-GitHub：https://github.com/Edlinf/pig-game-calendar （`main` 分支）
+GitHub：https://github.com/Edlinf/pig-game-calendar （源码 `main`，静态发布 `gh-pages`）
+
+原神页面：https://edlinf.github.io/pig-game-calendar/#genshin
 
 ## 本地查看
 
@@ -14,7 +16,7 @@ GitHub：https://github.com/Edlinf/pig-game-calendar （`main` 分支）
 python3 -m http.server 8000 --directory dist
 ```
 
-访问 `http://localhost:8000`。首页为 `#home`，游戏页为 `#wow`、`#ff14`、`#endfield`、`#arknights` 和 `#fgo`；原 `#calendar` 仍指向魔兽日历。
+访问 `http://localhost:8000`。首页为 `#home`，游戏页为 `#wow`、`#ff14`、`#endfield`、`#arknights`、`#fgo` 和 `#genshin`；原 `#calendar` 仍指向魔兽日历。
 
 ## 文件
 
@@ -39,6 +41,8 @@ python3 -m http.server 8000 --directory dist
 
 首页汇总同一份活动数据，默认显示未结束的已核对活动，支持游戏下拉筛选；已结束活动折叠保留。开放节点没有结束时间，不当作截止活动，在对应游戏月历查看。精确截止按排他 `endAt` 每秒更新倒计时，到期自动归入已结束；截止列保持官方原文的23:59、24:00等表述。仅公布日期的条目只显示按日期计算的天数，不生成小时、分钟或秒数。维护时刻未知时按已公布日期排序，同日排在已知时刻之后，倒计时显示待公告。未核实的参考排期不显示精确倒计时。
 
+只公布“版本更新后”的开始时间，保留 `start` 作为月历覆盖日期，设置 `startAt: null` 与 `startPrecision: 'version'`，`dateLabel` 写明版本更新后，不编造固定开服时刻。只列开始日期时使用 `startPrecision: 'day'`。
+
 `checked` 是实际核对日期，不能因为页面发布或标题改动而批量刷新。`verification` 区分官方公告、公告转载、国服 Wiki 与国服待核实参考。
 
 ## 每周更新
@@ -51,6 +55,7 @@ python3 -m http.server 8000 --directory dist
 - FF14：国服公告 https://ff.web.sdo.com/web8/index.html#/newstab/newslist 与公告指向的国服专题。不要只检查启动器的几条置顶新闻；逐条复核近期新闻、季节活动、限时联动、莫古莫古收集、黄金的试炼、网页领奖和月卡子活动。网页为动态内容时，官方公开接口 `https://cqnews.web.sdo.com/api/news/newsDetail?gameCode=ff&id=<公告ID>` 可读取正文；ID必须来自官方新闻列表，不能猜测。月卡抽奖资格与月卡优惠的截止不同，分别记录。维护日与联动结束重合时，在联动详情说明停机窗口。黄金的试炼可从专题公开配置 `Handler/Config/Active/GetCurrentActive.ashx`（POST）核对当期副本和挑战、登记、开奖日期，不能只按每周规则推算未来副本或期数。
 - 终末地：国服公告 https://endfield.hypergryph.com/news 。不要混用其他地区的服务器时间。
 - 明日方舟： https://ak.hypergryph.com/ ；官网正文不可读时用 PRTS / BWIKI 的对应公告转载，保留官方入口与实际来源。
+- 原神：国服官网 https://ys.mihoyo.com/main/news 、米游社原神官方，以及 https://www.taptap.cn/app/168332/topic?type=official 的官方入驻账号（西风快报员、提瓦特测试员）。官网正文为动态内容时可使用这些官方账号的同一公告；图片中的排期要实际读取。核对当期版本活动、祈愿、周年福利、网页活动、纪行、砺行修远、挑战轮换及千星奇域。不要把海外服务器时间或日本公告时区直接套入国服；版本末尾未知不按六周周期猜日期。
 - FGO：国服官网 https://game.bilibili.com/fgo/news.html ；Mooncell https://fgo.wiki/w/Event 明确标注的国服北京时间，禁止按日服年份平移。
 
 先更新活动条目及单条核对日期，再核查首页与游戏页；无法核实的日期明确说明，不能推断成没有活动。原魔兽职责攻略继续更新，时光周必须先核对国服轮换。发布保持原站点和访问权限。
@@ -59,8 +64,8 @@ python3 -m http.server 8000 --directory dist
 
 以 Sites 最新源代码为更新起点，完成修改、检查和源代码提交后，将同一份源码同步到 `.openai/github-sync.json` 指定的 `Edlinf/pig-game-calendar` 仓库 `main` 分支。保留 GitHub 原有提交，以当前分支提交为父提交；更新分支时检查预期提交 SHA，不强制覆盖并发修改。同步后回读仓库文件清单与 Git blob SHA，确认与本次源代码一致。
 
-只上传项目源码和配置，不上传临时目录、归档、环境变量或凭据。GitHub 用于代码同步；网站仍由 Sites 发布。直接修改 GitHub 不会自动发布到网站，下次更新须先检查并合并这些修改，避免覆盖。
+只上传项目源码和配置，不上传临时目录、归档、环境变量或凭据。Sites 与 GitHub Pages 使用同一版本内容。源码同步到 `main` 后，将本次 `dist/` 的静态文件放到 `gh-pages` 根目录，并保留空的 `.nojekyll`；该分支不包含 `.openai` 配置。以当前 `gh-pages` 提交为父提交、检查预期 SHA，再回读静态文件的 blob SHA。Pages 设置为 Deploy from a branch、`gh-pages`、`/(root)`；核实对应提交的 pages build and deployment 成功后才报告公开站点已更新。直接修改 GitHub 源码不会自动更新静态发布分支，下次更新须先检查并合并修改。
 
 ## 本次资料范围
 
-新增游戏核对于2026-10-09，魔兽日历沿用2026-10-04。FF14 已复核近期国服公告，补入 FF15 联动（9/24—10/13）、莫古莫古第1阶段（9/9—10/19）、守护天节（10/15—11/2）、月卡活动、拍立方线下联动与黄金的试炼第84期（挑战10/9—10/11、登记至10/15 13:00）；妖怪手表已于10/5结束。莫古莫古第2阶段、8.05指南书领奖截止与8.1兑换截止仍待对应公告，不能把10/19误写为所有兑换关闭。FGO 使用国服 Wiki，本次官网正文不可读。本站为玩家资料手册，各游戏名称及商标归其权利人所有。
+新增游戏核对于2026-10-09，魔兽日历沿用2026-10-04。FF14 已复核近期国服公告，补入 FF15 联动（9/24—10/13）、莫古莫古第1阶段（9/9—10/19）、守护天节（10/15—11/2）、月卡活动、拍立方线下联动与黄金的试炼第84期（挑战10/9—10/11、登记至10/15 13:00）；妖怪手表已于10/5结束。莫古莫古第2阶段、8.05指南书领奖截止与8.1兑换截止仍待对应公告，不能把10/19误写为所有兑换关闭。FGO 使用国服 Wiki，本次官网正文不可读；补入3300万下载突破纪念活动及梅塔特隆·贞德推荐召唤（10/8 19:00—10/22 13:59），登录与兑换子项在主体详情说明，不重复列活动。原神已加入并核对7.1国服官方公告，包括逐月节、周年活动、角色/武器祈愿、自选邀请、幽境危战、纪行、砺行修远和千星奇域。判测胜券本征仅有速递日期，幻想真境剧诗仅核对轮换日期，周年邮件的版本关闭时刻待公告，均不生成精确倒计时。本站为玩家资料手册，各游戏名称及商标归其权利人所有。

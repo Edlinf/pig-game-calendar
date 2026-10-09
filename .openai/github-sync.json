@@ -3,5 +3,11 @@
   "branch": "main",
   "source_provider": "sites",
   "project_id": "appgprj_6aaba3744d2c8191bf07ac6b9698a398",
-  "mode": "source_snapshot"
+  "mode": "source_snapshot",
+  "pages": {
+    "branch": "gh-pages",
+    "root": "/",
+    "source_directory": "dist",
+    "url": "https://edlinf.github.io/pig-game-calendar/"
+  }
 }
