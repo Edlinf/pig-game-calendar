@@ -11,3 +11,157 @@ header{gap:28px;flex-wrap:wrap;padding:18px 4%;min-height:88px}header nav{gap:24
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.deadline-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}.deadline-heading h1{font-family:system-ui,sans-serif;font-size:32px;font-weight:500;margin:0;letter-spacing:-.5px}.deadline-heading p{color:var(--muted);font-size:14px;margin:0}.deadline-controls{display:flex;gap:22px;align-items:center;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);padding:16px 20px;margin-bottom:18px}.deadline-controls label{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}.deadline-controls select{min-width:190px;max-width:100%;font-size:14px;padding:8px 12px}.deadline-verification{margin:0;gap:6px}.deadline-verification button{font-size:14px;padding:7px 12px}.deadline-result-count{font-size:14px;color:var(--muted);margin-left:auto}.deadline-table-wrap{border:1px solid var(--line);border-radius:3px;overflow:hidden}.deadline-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;line-height:1.6}.deadline-table .col-game{width:8%}.deadline-table .col-event{width:26%}.deadline-table .col-type{width:10%}.deadline-table .col-period{width:23%}.deadline-table .col-deadline{width:16%}.deadline-table .col-countdown{width:17%}.deadline-table th{font-size:14px;font-weight:600;background:#1f2a34;text-align:left;padding:14px 16px;border-bottom:1px solid var(--line)}.deadline-table td{padding:17px 16px;vertical-align:middle;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.deadline-table th+th,.deadline-table td+td{border-left:1px solid var(--line)}.deadline-table tbody tr:nth-child(even){background:#172029}.deadline-table tbody tr:hover{background:#202b35}.deadline-table tbody tr:last-child td{border-bottom:0}.deadline-game-name{color:var(--accent);font-weight:600;white-space:nowrap}.deadline-event-name{display:block;padding:0;border:0;background:none;color:var(--accent);font-size:16px;line-height:1.6;text-align:left;overflow-wrap:anywhere}.deadline-event-name:hover{text-decoration:underline;border:0}.deadline-state{display:block;margin-top:5px;color:var(--muted);font-size:14px}.deadline-period{color:#c4cdd6}.deadline-date strong,.deadline-date>span,.deadline-date small,.deadline-countdown small{display:block}.deadline-date strong{font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}.deadline-date small,.deadline-countdown small{font-size:12px;color:var(--muted);margin-top:3px}.deadline-countdown{font-variant-numeric:tabular-nums}.countdown-value{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap;font-size:14px}.deadline-countdown.urgent .countdown-value{color:#ffba8a}.deadline-empty{text-align:center;color:var(--muted);padding:40px!important}.deadline-archive{margin:24px 0 8px}.deadline-archive .deadline-table-wrap{margin-top:18px}.deadline-coverage .coverage{margin-top:16px}.deadline-coverage .coverage-row:first-child{border-top:0;padding-top:0}
 @media(max-width:1100px){.deadline-table th,.deadline-table td{padding:12px 10px}.deadline-controls{gap:14px;padding:14px 16px}.deadline-result-count{margin-left:0}.deadline-table .col-event{width:27%}.deadline-table .col-period{width:21%}.deadline-table .col-countdown{width:18%}}
 @media(max-width:760px){.deadline-heading h1{font-size:28px}.deadline-controls{gap:12px}.deadline-controls label{width:100%}.deadline-controls select{flex:1;min-width:0}.deadline-result-count{width:100%}.deadline-table-wrap{border:0;overflow:visible}.deadline-table,.deadline-table tbody{display:block}.deadline-table colgroup,.deadline-table thead{display:none}.deadline-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border:1px solid var(--line);margin-bottom:12px;background:var(--panel);border-radius:3px}.deadline-table tbody tr:nth-child(even){background:var(--panel)}.deadline-table td{display:block;padding:10px 12px;border:0!important;min-width:0}.deadline-table td::before{content:attr(data-label);display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:5px}.deadline-table td[data-label="游戏"]{grid-column:1;grid-row:1;padding-bottom:6px}.deadline-table td[data-label="游戏"]::before{display:none}.deadline-table td[data-label="类型"]{grid-column:2;grid-row:1;text-align:right;padding-bottom:6px;color:var(--muted)}.deadline-table td[data-label="类型"]::before{display:none}.deadline-table td[data-label="活动"]{grid-column:1/-1;grid-row:2;padding-top:0}.deadline-table td[data-label="活动"]::before{display:none}.deadline-table td[data-label="活动时间"]{grid-column:1/-1;grid-row:3;border-top:1px solid var(--line)!important}.deadline-table td[data-label="截止时间"]{grid-column:1;grid-row:4;border-top:1px solid var(--line)!important}.deadline-table td[data-label="倒计时"]{grid-column:2;grid-row:4;border-top:1px solid var(--line)!important;border-left:1px solid var(--line)!important}.deadline-table .deadline-empty{grid-column:1/-1}.deadline-event-name{font-size:16px}.deadline-state{font-size:14px}.deadline-date strong{white-space:normal}.countdown-value{white-space:normal}.deadline-verification button{font-size:14px}}
+
+/* Approved light-gray theme, shared by the deadline list and game calendars. */
+:root {
+  color-scheme: light;
+  --bg: #eef0f2;
+  --panel: #f7f8f9;
+  --line: #d7dce2;
+  --gold: #805600;
+  --muted: #5d6977;
+  --accent: #805600;
+  --text: #1f2937;
+  --input: #f3f5f7;
+  --radius: 16px;
+}
+body { color: var(--text); font-size: 1rem; }
+header { background: #f4f5f6; }
+.brand { color: var(--text); min-width: 0; }
+.brand small { font-size: .75rem; }
+.sigil { border-radius: 12px; }
+.region { border-radius: 999px; }
+main, .layout > *, .guide-layout > * { min-width: 0; }
+h1, h2, h3 { overflow-wrap: anywhere; }
+a { color: var(--gold); overflow-wrap: anywhere; }
+button, select { background: var(--input); border-radius: 10px; }
+button, select, a { touch-action: manipulation; }
+.controls button.on { background: #f8f3e9; color: var(--gold); border-color: var(--gold); }
+.panel, .card, .event-card, .game-tile, .deadline-strip,
+.deadline-controls, .deadline-table-wrap, dialog { border-radius: var(--radius); }
+.badge { background: #eceff2; color: #475466; border-radius: 999px; }
+.badge.pending { background: #f8f0dd; color: #755308; }
+.day { color: var(--text); }
+.day.today .num { color: #fff; }
+.day.selected { background: #edf2f7; }
+.event-tag { color: #704eab; border-color: #704eab; }
+.event-tag.blue { color: #245ea6; border-color: #245ea6; }
+.event-tag.gold { color: var(--gold); }
+.bar { background: #d7dce2; }
+.linkbutton, .subnav a { border-radius: 10px; }
+.note { background: #f8f3e9; border-radius: 10px; }
+.role { background: #edf1f5; border-radius: 12px; }
+.card .index { color: #65717d; }
+details p { color: var(--muted); }
+.game-tile:hover { background: #edf1f5; }
+.deadline-strip { background: var(--panel); }
+.event-state { color: #38664f; }
+.event-state.urgent { color: #b6382a; }
+.event-date, .deadline-period { color: var(--muted); }
+.event-card p { overflow-wrap: anywhere; }
+.coverage-row strong { overflow-wrap: anywhere; }
+.coverage-row p, .source, .dialog-top { overflow-wrap: anywhere; }
+.selected-day > .panel { scrollbar-color: #bac3ce transparent; }
+.calendar {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.weekday-row { background: #eceff2; }
+.week-days .day.out { color: #626e7b; background: #f0f2f4; }
+.week-days .day.selected, .week-days .day.selected:hover {
+  background: #edf2f7;
+  box-shadow: inset 0 0 0 2px #aec8e4;
+}
+.week-days .day:hover { background: #e9eef3; }
+.week-days .day.today .num { color: #fff; }
+.week-days .more-events { font-size: .75rem; line-height: 1.5; letter-spacing: 0; }
+.event-band {
+  border: 0;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 8%, #f7f8f9);
+  color: var(--accent);
+  font-size: .875rem;
+}
+.event-band:hover { background: color-mix(in srgb, var(--accent) 12%, #f7f8f9); }
+.event-band.unconfirmed { border: 1px dashed var(--accent); }
+.calendar-filters span, .calendar-help { font-size: .75rem; }
+.weekday { font-size: .875rem; }
+.month-controls { flex-wrap: wrap; }
+.detail-button { background: var(--input); }
+dialog {
+  color: var(--text);
+  max-height: min(90vh, 900px);
+  overscroll-behavior: contain;
+  scrollbar-color: #bac3ce transparent;
+}
+dialog::backdrop { background: #1d293d66; }
+.dialog-top { align-items: flex-start; }
+.dialog-top button { flex: 0 0 auto; }
+.event-info { min-width: 0; }
+.event-info dd { min-width: 0; }
+.deadline-table th { background: #eceff2; color: #374151; font-size: .875rem; }
+.deadline-table tbody tr:nth-child(even) { background: #f1f3f5; }
+.deadline-table tbody tr:hover { background: #e9edf2; }
+.deadline-game-name { white-space: normal; }
+.deadline-event-name { background: none; border-radius: 0; }
+.deadline-countdown.urgent .countdown-value { color: #b6382a; }
+.deadline-countdown small, .deadline-date small { font-size: .75rem; }
+.countdown-value { font-size: .875rem; }
+@supports (height: 100dvh) {
+  dialog { max-height: min(calc(100dvh - 32px), 900px); }
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  header nav { justify-content: flex-start; }
+}
+@media (max-width: 760px) {
+  .deadline-heading h1 { font-size: 1.625rem; line-height: 1.35; }
+  .deadline-table-wrap { background: transparent; border-radius: 0; }
+  .deadline-table tbody tr,
+  .deadline-table tbody tr:nth-child(even) { background: var(--panel); border-radius: var(--radius); }
+  .deadline-table tbody tr:hover { background: var(--panel); }
+  .deadline-table td { overflow-wrap: anywhere; }
+  .deadline-date strong, .countdown-value { white-space: normal; }
+  .deadline-event-name { font-size: 1rem; }
+  .deadline-state, .deadline-period, .deadline-date, .deadline-countdown { font-size: .875rem; }
+  .deadline-controls label { min-width: 0; }
+  .deadline-controls select { min-width: 0; }
+  .deadline-verification { width: 100%; }
+  .deadline-verification button { flex: 1; }
+}
+@media (max-width: 580px) {
+  header nav { column-gap: 16px; row-gap: 4px; }
+  header nav a { font-size: .875rem; }
+  .brand { font-size: 1.125rem; }
+  .brand small { letter-spacing: 1px; }
+  .sigil { width: 42px; flex: 0 0 42px; }
+  main { padding: 22px 4% 40px; }
+  .deadline-heading h1 { font-size: 1.5rem; }
+  .panel { padding: 16px; }
+  .calendar-panel { padding: 10px; }
+  .calendar-filters button { font-size: .875rem; }
+  .calendar-filters span { flex-basis: 100%; }
+  .between h2 { font-size: 1.25rem; }
+  .calendar-week { padding-top: 38px; padding-bottom: 26px; }
+  .week-events { grid-template-rows: repeat(var(--lane-count), 32px); gap: 4px 0; }
+  .event-band { font-size: .75rem; line-height: 30px; padding: 0 5px; }
+  .week-days .num { font-size: .875rem; }
+  .week-days .more-events { font-size: .75rem; white-space: nowrap; }
+  .selected-day > .panel { max-height: none; overflow: visible; }
+  .event-card { padding: 16px; }
+  .event-card h3 { font-size: 1.125rem; }
+  .event-date { font-size: .875rem; }
+  dialog { width: calc(100% - 24px); padding: 16px; }
+  .event-info { font-size: 1rem; }
+  .bosslist { flex-wrap: wrap; overflow: visible; }
+  .bosslist button { min-width: 0; flex: 1 1 140px; }
+}
+@media (pointer: coarse) {
+  button, select { min-height: 44px; }
+  header nav a, .subnav a { display: inline-flex; align-items: center; min-height: 44px; }
+  select { font-size: 1rem; }
+  .week-events { grid-template-rows: repeat(var(--lane-count), 44px); }
+  .event-band { min-height: 44px; line-height: 42px; }
+  .deadline-event-name { padding: 0; }
+}

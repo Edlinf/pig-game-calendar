@@ -1,4 +1,7 @@
 const app=document.getElementById('app');
+const GAME_COLORS={wow:'#805600',ff14:'#245ea6',endfield:'#596300',arknights:'#984e1a',fgo:'#704eab',genshin:'#086c59'};
+GAMES.forEach(g=>{g.color=GAME_COLORS[g.id]||g.color});
+const mobileCalendar=window.matchMedia('(max-width:580px)');
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 let selected=today,month=+today.slice(5,7)-1,year=+today.slice(0,4),mode='detail',role=-1,boss=0,dungeon=0,tw='dungeons',eventFilter='confirmed',scope='home',lastFocus=null,deadlineGame='all',deadlineRefreshAt=Infinity;
 const roleNames=['坦克','治疗','输出'];
@@ -92,7 +95,7 @@ function calendarWeeks(events){
  const first=new Date(Date.UTC(year,month,1));
  const offset=(first.getUTCDay()+6)%7;
  const dates=Array.from({length:42},(_,i)=>new Date(Date.UTC(year,month,1-offset+i)).toISOString().slice(0,10));
- const previousLanes=new Map(),maxLanes=5;
+ const previousLanes=new Map(),maxLanes=mobileCalendar.matches?3:5;
  return Array.from({length:6},(_,w)=>{
   const days=dates.slice(w*7,w*7+7);
   const segments=events.flatMap(event=>{
@@ -121,7 +124,7 @@ function calendarWeeks(events){
 }
 function monthCalendar(events){
  const weeks=calendarWeeks(events);
- return `<div class="calendar" aria-label="${year}年${month+1}月活动日历"><div class="weekday-row">${['一','二','三','四','五','六','日'].map(d=>`<div class="weekday">${d}</div>`).join('')}</div>${weeks.map(week=>`<div class="calendar-week" style="--lane-count:${week.lanes}"><div class="week-days">${week.days.map((date,i)=>{const count=events.filter(e=>matchesDay(e,date)).length;return `<button data-date="${date}" class="day${+date.slice(5,7)!==month+1?' out':''}${date===selected?' selected':''}${date===today?' today':''}" aria-pressed="${date===selected}" aria-label="${date}，${count}项活动${week.overflow[i]?'，另有'+week.overflow[i]+'项可点日期查看':''}"><span class="num">${+date.slice(8)}</span>${week.overflow[i]?`<span class="more-events">另 ${week.overflow[i]} 项</span>`:''}</button>`}).join('')}</div><div class="week-events">${week.segments.map(s=>{const e=s.event,label=(scope==='home'?game(e.game).short+' · ':'')+e.short;return `<button data-event="${e.id}" class="event-band${s.before?' continues-before':''}${s.after?' continues-after':''}${e.confirmed?'':' unconfirmed'}" style="--accent:${game(e.game).color};grid-column:${s.first+1} / ${s.last+2};grid-row:${s.lane+1}" title="${escapeHtml(e.name+' · '+dateText(e))}" aria-label="${escapeHtml(game(e.game).name+'，'+e.name+'，'+dateText(e))}">${escapeHtml(label)}</button>`}).join('')}</div></div>`).join('')}</div>`;
+ return `<div class="calendar" aria-label="${year}年${month+1}月活动日历"><div class="weekday-row">${['一','二','三','四','五','六','日'].map(d=>`<div class="weekday">${d}</div>`).join('')}</div>${weeks.map(week=>`<div class="calendar-week" style="--lane-count:${week.lanes}"><div class="week-days">${week.days.map((date,i)=>{const count=events.filter(e=>matchesDay(e,date)).length;return `<button data-date="${date}" class="day${+date.slice(5,7)!==month+1?' out':''}${date===selected?' selected':''}${date===today?' today':''}" aria-pressed="${date===selected}" aria-label="${date}，${count}项活动${week.overflow[i]?'，另有'+week.overflow[i]+'项可点日期查看':''}"><span class="num">${+date.slice(8)}</span>${week.overflow[i]?`<span class="more-events">${mobileCalendar.matches?"+"+week.overflow[i]:"另 "+week.overflow[i]+" 项"}</span>`:''}</button>`}).join('')}</div><div class="week-events">${week.segments.map(s=>{const e=s.event,label=(scope==='home'?game(e.game).short+' · ':'')+e.short;return `<button data-event="${e.id}" class="event-band${s.before?' continues-before':''}${s.after?' continues-after':''}${e.confirmed?'':' unconfirmed'}" style="--accent:${game(e.game).color};grid-column:${s.first+1} / ${s.last+2};grid-row:${s.lane+1}" title="${escapeHtml(e.name+' · '+dateText(e))}" aria-label="${escapeHtml(game(e.game).name+'，'+e.name+'，'+dateText(e))}">${escapeHtml(label)}</button>`}).join('')}</div></div>`).join('')}</div>`;
 }
 function calendar(){
  const g=game(scope),events=scopedEvents();
@@ -135,7 +138,7 @@ function calendar(){
 function openEvent(id){const e=GAME_EVENTS.find(x=>x.id===id);if(!e)return;lastFocus=document.activeElement;document.getElementById('event-detail').innerHTML=`<div class="dialog-top"><span>${game(e.game).name} · ${game(e.game).region}</span><button data-closeevent aria-label="关闭活动详情">关闭</button></div>${card(e,true)}`;document.getElementById('event-dialog').showModal()}
 function render(){
  const route=location.hash.slice(1).split('/'),key=route[0]||'home';scope=['raid','dungeon','timewalking','calendar'].includes(key)?'wow':game(key)?key:'home';
- document.body.dataset.game=scope;document.documentElement.style.setProperty('--accent',game(scope)?.color||'#dbb878');
+ document.body.dataset.game=scope;document.documentElement.style.setProperty('--accent',game(scope)?.color||'#805600');
  document.querySelectorAll('header nav a').forEach(a=>{const yes=a.hash==='#'+scope;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
  document.title=`游戏活动手册 · ${game(scope)?.name||'Game Event Deadlines'}`;
  if(key==='raid'){boss=Math.max(0,Math.min(8,Number(route[1])||0));guide('raid');app.insertAdjacentHTML('afterbegin',wowNav('raid'))}
@@ -159,4 +162,5 @@ app.addEventListener('change',e=>{if(e.target.id==='deadline-game'){deadlineGame
 const dialog=document.getElementById('event-dialog');
 dialog.addEventListener('click',e=>{if(e.target.closest('[data-closeevent]')||e.target===dialog)dialog.close()});
 dialog.addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus()});
+mobileCalendar.addEventListener('change',()=>render());
 window.addEventListener('hashchange',()=>{dialog.close();render();window.scrollTo({top:0})});render();setInterval(tickDeadlines,1000);
