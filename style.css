@@ -91,12 +91,15 @@ details p { color: var(--muted); }
 .week-days .day:hover { background: #d7e1eb; }
 .week-days .day.today .num { color: #fff; }
 .week-days .more-events { font-size: .75rem; line-height: 1.5; letter-spacing: 0; }
+.week-events { grid-template-rows: repeat(var(--lane-count), 1.5rem); gap: 3px 0; }
 .event-band {
   border: 0;
   border-radius: 8px;
   background: color-mix(in srgb, var(--accent) 8%, #e8ebee);
   color: var(--accent);
   font-size: .875rem;
+  min-height: 0;
+  line-height: 1.375rem;
 }
 .event-band:hover { background: color-mix(in srgb, var(--accent) 12%, #e8ebee); }
 .event-band.unconfirmed { border: 1px dashed var(--accent); }
@@ -159,8 +162,8 @@ dialog::backdrop { background: #1d293d66; }
   .calendar-filters span { flex-basis: 100%; }
   .between h2 { font-size: 1.25rem; }
   .calendar-week { padding-top: 38px; padding-bottom: 26px; }
-  .week-events { grid-template-rows: repeat(var(--lane-count), 32px); gap: 4px 0; }
-  .event-band { font-size: .75rem; line-height: 30px; padding: 0 5px; }
+  .week-events { grid-template-rows: repeat(var(--lane-count), 1.75rem); gap: 3px 0; }
+  .event-band { font-size: .75rem; line-height: 1.625rem; padding: 0 5px; }
   .week-days .num { font-size: .875rem; }
   .week-days .more-events { font-size: .75rem; white-space: nowrap; }
   .selected-day > .panel { max-height: none; overflow: visible; }
@@ -176,8 +179,8 @@ dialog::backdrop { background: #1d293d66; }
   button, select { min-height: 44px; }
   header nav a, .subnav a { display: inline-flex; align-items: center; min-height: 44px; }
   select { font-size: 1rem; }
-  .week-events { grid-template-rows: repeat(var(--lane-count), 44px); }
-  .event-band { min-height: 44px; line-height: 42px; }
+  .week-events { grid-template-rows: repeat(var(--lane-count), 1.75rem); }
+  .event-band { min-height: 0; line-height: 1.625rem; }
   .deadline-event-name { padding: 0; }
 }
 
