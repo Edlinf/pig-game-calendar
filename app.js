@@ -1,5 +1,5 @@
 const app=document.getElementById('app');
-const GAME_COLORS={wow:'#805600',ff14:'#245ea6',endfield:'#596300',arknights:'#984e1a',fgo:'#704eab',genshin:'#086c59'};
+const GAME_COLORS={wow:'#805600',ff14:'#245ea6',endfield:'#4c5700',arknights:'#8b4414',fgo:'#654597',genshin:'#075d4c'};
 GAMES.forEach(g=>{g.color=GAME_COLORS[g.id]||g.color});
 const mobileCalendar=window.matchMedia('(max-width:580px)');
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
