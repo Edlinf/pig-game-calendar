@@ -93,16 +93,22 @@ details p { color: var(--muted); }
 .week-days .more-events { font-size: .75rem; line-height: 1.5; letter-spacing: 0; }
 .week-events { grid-template-rows: repeat(var(--lane-count), 1.5rem); gap: 3px 0; }
 .event-band {
-  border: 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, #e8ebee);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--accent) 8%, #e8ebee);
-  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, #e8ebee);
+  color: color-mix(in srgb, var(--accent) 95%, #1f2937);
   font-size: .875rem;
   min-height: 0;
   line-height: 1.375rem;
 }
-.event-band:hover { background: color-mix(in srgb, var(--accent) 12%, #e8ebee); }
+.event-band:hover {
+  background: color-mix(in srgb, var(--accent) 14%, #e8ebee);
+  border-color: var(--accent);
+  box-shadow: 0 1px 3px rgba(31, 41, 55, .12);
+}
 .event-band.unconfirmed { border: 1px dashed var(--accent); }
+.event-band.continues-before { border-left-width: 0; }
+.event-band.continues-after { border-right-width: 0; }
 .calendar-filters span, .calendar-help { font-size: .75rem; }
 .weekday { font-size: .875rem; }
 .month-controls { flex-wrap: wrap; }
