@@ -3,7 +3,8 @@ const GAME_COLORS={wow:'#805600',ff14:'#245ea6',endfield:'#4c5700',arknights:'#8
 GAMES.forEach(g=>{g.color=GAME_COLORS[g.id]||g.color});
 const mobileCalendar=window.matchMedia('(max-width:580px)');
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-let selected=today,month=+today.slice(5,7)-1,year=+today.slice(0,4),mode='detail',role=-1,boss=0,dungeon=0,tw='dungeons',eventFilter='confirmed',scope='home',lastFocus=null,deadlineGame='all',deadlineRefreshAt=Infinity;
+let selected=today,month=+today.slice(5,7)-1,year=+today.slice(0,4),mode='detail',role=-1,boss=0,dungeon=0,tw='dungeons',eventFilter='confirmed',scope='home',lastFocus=null,deadlinePickerOpen=false,deadlineRefreshAt=Infinity;
+const deadlineGames=new Set(GAMES.map(g=>g.id));
 const roleNames=['坦克','治疗','输出'];
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ext=(url,label)=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
@@ -63,7 +64,19 @@ function compareDeadlines(a,b){
  return (da===db?0:da==='待公告'?1:db==='待公告'?-1:da.localeCompare(db))||
   ((a.boundaryDate||a.datePrecision==='day'?Infinity:endTime(a))-(b.boundaryDate||b.datePrecision==='day'?Infinity:endTime(b)))||a.id.localeCompare(b.id);
 }
-function homeEvents(){return visibleEvents().filter(e=>!e.milestone&&(deadlineGame==='all'||e.game===deadlineGame)&&(eventFilter==='all'||e.confirmed)).sort(compareDeadlines)}
+function homeEvents(){return visibleEvents().filter(e=>!e.milestone&&deadlineGames.has(e.game)&&(eventFilter==='all'||e.confirmed)).sort(compareDeadlines)}
+function deadlineGamePicker(){
+ const chosen=GAMES.filter(g=>deadlineGames.has(g.id));
+ const label=chosen.length===GAMES.length?'全部游戏':!chosen.length?'未选择游戏':chosen.length<=3?chosen.map(g=>['wow','arknights'].includes(g.id)?g.name:g.short).join('、'):'已选 '+chosen.length+' 款游戏';
+ return `<div class="deadline-game-filter"><span id="deadline-game-label">游戏</span><div class="deadline-game-picker"><button type="button" id="deadline-game-toggle" data-game-picker aria-labelledby="deadline-game-label deadline-game-summary" aria-expanded="${deadlinePickerOpen}" aria-controls="deadline-game-menu"><span id="deadline-game-summary">${escapeHtml(label)}</span><span aria-hidden="true">▾</span></button><div id="deadline-game-menu" class="deadline-game-menu"${deadlinePickerOpen?'':' hidden'}><div class="deadline-game-actions"><button type="button" id="deadline-game-all" data-game-selection="all"${chosen.length===GAMES.length?' disabled':''}>全选</button><button type="button" id="deadline-game-none" data-game-selection="none"${!chosen.length?' disabled':''}>全不选</button><span aria-live="polite">已选 ${chosen.length} / ${GAMES.length}</span></div><fieldset><legend class="sr-only">选择要显示的游戏</legend>${GAMES.map(g=>`<label class="deadline-game-option" for="deadline-game-${g.id}"><input type="checkbox" id="deadline-game-${g.id}" name="deadline-games" data-game-option value="${g.id}"${deadlineGames.has(g.id)?' checked':''}><span>${escapeHtml(g.name)}</span></label>`).join('')}</fieldset></div></div></div>`;
+}
+function setDeadlinePickerOpen(open,focus=false){
+ deadlinePickerOpen=open;
+ const toggle=document.getElementById('deadline-game-toggle'),menu=document.getElementById('deadline-game-menu');
+ if(toggle)toggle.setAttribute('aria-expanded',String(open));
+ if(menu)menu.hidden=!open;
+ if(focus)toggle?.focus({preventScroll:true});
+}
 function countdownState(e,now=Date.now()){
  if(endTime(e)<=now)return {value:'已结束',note:'',urgent:false};
  if(!e.confirmed)return {value:'待核实',note:'参考排期',urgent:false};
@@ -79,9 +92,11 @@ function countdownState(e,now=Date.now()){
 function countdownMarkup(e,now){const c=countdownState(e,now);return `<span class="countdown-value">${c.value}</span>${c.note?`<small>${c.note}</small>`:''}`}
 function deadlineTable(events,now,label){return `<div class="deadline-table-wrap"><table class="deadline-table"><caption class="sr-only">${label}，按截止时间从近到远排列，北京时间</caption><colgroup><col class="col-game"><col class="col-event"><col class="col-type"><col class="col-period"><col class="col-deadline"><col class="col-countdown"></colgroup><thead><tr><th scope="col">游戏</th><th scope="col">活动</th><th scope="col">类型</th><th scope="col">活动时间</th><th scope="col" aria-sort="ascending">截止时间</th><th scope="col">倒计时</th></tr></thead><tbody>${events.length?events.map(e=>{const g=game(e.game),info=deadlineInfo(e),c=countdownState(e,now);return `<tr data-deadline-row="${e.id}" style="--accent:${g.color}"><td data-label="游戏"><a class="deadline-game-name" href="#${g.id}" title="${escapeHtml(g.name)}">${g.short}</a></td><td data-label="活动"><button class="deadline-event-name" data-event="${e.id}">${escapeHtml(e.name)}</button><span class="deadline-state" data-event-state="${e.id}">${status(e,now)}</span></td><td data-label="类型">${escapeHtml(e.type)}</td><td data-label="活动时间" class="deadline-period">${escapeHtml(dateText(e))}</td><td data-label="截止时间" class="deadline-date"><strong>${escapeHtml(info.date)}</strong>${info.time?`<span>${escapeHtml(info.time)}</span>`:''}${info.note?`<small>${escapeHtml(info.note)}</small>`:''}</td><td data-label="倒计时" class="deadline-countdown${c.urgent?' urgent':''}" data-countdown="${e.id}" aria-live="off">${countdownMarkup(e,now)}</td></tr>`}).join(''):'<tr><td colspan="6" class="deadline-empty">暂无符合筛选条件的活动。</td></tr>'}</tbody></table></div>`}
 function deadlineHome(){
+ const focused=document.activeElement?.closest('.deadline-game-picker')?document.activeElement.id:null;
  const now=Date.now(),events=homeEvents(),pending=events.filter(e=>endTime(e)>now),ended=events.filter(e=>endTime(e)<=now);
  deadlineRefreshAt=Math.min(Infinity,...pending.map(endTime).filter(t=>Number.isFinite(t)));
- app.innerHTML=`<section class="deadline-home"><div class="deadline-heading"><h1>Game Event Deadlines</h1><p>国服 · 北京时间（UTC+8）</p></div><div class="deadline-controls"><label for="deadline-game">游戏<select id="deadline-game"><option value="all"${deadlineGame==='all'?' selected':''}>全部游戏</option>${GAMES.map(g=>`<option value="${g.id}"${deadlineGame===g.id?' selected':''}>${g.name}</option>`).join('')}</select></label><div class="controls deadline-verification" aria-label="排期核对筛选"><button data-filter="confirmed" class="${eventFilter==='confirmed'?'on':''}" aria-pressed="${eventFilter==='confirmed'}">已核对排期</button><button data-filter="all" class="${eventFilter==='all'?'on':''}" aria-pressed="${eventFilter==='all'}">含待核实参考</button></div><span class="deadline-result-count">${pending.length} 项 · 截止从近到远</span></div>${deadlineTable(pending,now,'未结束活动')}${ended.length?`<details class="archive deadline-archive"><summary>已结束活动 · ${ended.length} 项</summary>${deadlineTable(ended,now,'已结束活动')}</details>`:''}<details class="deadline-coverage"><summary>资料核对</summary><section class="panel coverage">${GAMES.filter(g=>deadlineGame==='all'||g.id===deadlineGame).map(g=>`<div class="coverage-row"><strong style="color:${g.color}">${g.name}</strong><p>${g.note}</p><span>${ext(g.source,'公告入口')} · 核对 ${g.checked}</span></div>`).join('')}</section></details></section>`;
+ app.innerHTML=`<section class="deadline-home"><div class="deadline-heading"><h1>Game Event Deadlines</h1><p>国服 · 北京时间（UTC+8）</p></div><div class="deadline-controls">${deadlineGamePicker()}<div class="controls deadline-verification" aria-label="排期核对筛选"><button data-filter="confirmed" class="${eventFilter==='confirmed'?'on':''}" aria-pressed="${eventFilter==='confirmed'}">已核对排期</button><button data-filter="all" class="${eventFilter==='all'?'on':''}" aria-pressed="${eventFilter==='all'}">含待核实参考</button></div><span class="deadline-result-count" aria-live="polite">${pending.length} 项 · 截止从近到远</span></div>${deadlineGames.size?deadlineTable(pending,now,'未结束活动'):'<div class="deadline-table-wrap"><p class="deadline-empty">未选择游戏，请在筛选中勾选要查看的游戏。</p></div>'}${ended.length?`<details class="archive deadline-archive"><summary>已结束活动 · ${ended.length} 项</summary>${deadlineTable(ended,now,'已结束活动')}</details>`:''}<details class="deadline-coverage"><summary>资料核对</summary><section class="panel coverage">${GAMES.filter(g=>deadlineGames.has(g.id)).map(g=>`<div class="coverage-row"><strong style="color:${g.color}">${g.name}</strong><p>${g.note}</p><span>${ext(g.source,'公告入口')} · 核对 ${g.checked}</span></div>`).join('')}</section></details></section>`;
+ if(focused){const target=document.getElementById(focused);(target&&!target.disabled?target:document.getElementById('deadline-game-toggle'))?.focus({preventScroll:true});}
 }
 function tickDeadlines(){
  if(scope!=='home')return;
@@ -148,6 +163,8 @@ function render(){
  else calendar();
 }
 app.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if('gamePicker'in d){setDeadlinePickerOpen(!deadlinePickerOpen);return;}
+ if(d.gameSelection==='all'||d.gameSelection==='none'){deadlineGames.clear();if(d.gameSelection==='all')GAMES.forEach(g=>deadlineGames.add(g.id));deadlineHome();return;}
  if(d.month){month+=Number(d.month);if(month<0){month=11;year--}if(month>11){month=0;year++}calendar()}
  if('today'in d){selected=today;year=+today.slice(0,4);month=+today.slice(5,7)-1;calendar()}
  if(d.date){selected=d.date;calendar()}
@@ -158,9 +175,11 @@ app.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return
  if(d.role!==undefined){role=+d.role;render()}
  if(d.tw){tw=d.tw;render()}
 });
-app.addEventListener('change',e=>{if(e.target.id==='deadline-game'){deadlineGame=GAMES.some(g=>g.id===e.target.value)?e.target.value:'all';deadlineHome();document.getElementById('deadline-game').focus()}});
+app.addEventListener('change',e=>{const input=e.target;if(input.matches('input[data-game-option]')&&game(input.value)){input.checked?deadlineGames.add(input.value):deadlineGames.delete(input.value);deadlineHome();}});
+document.addEventListener('click',e=>{if(deadlinePickerOpen&&!e.target.closest('.deadline-game-picker'))setDeadlinePickerOpen(false);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&deadlinePickerOpen){e.preventDefault();setDeadlinePickerOpen(false,true);}});
 const dialog=document.getElementById('event-dialog');
 dialog.addEventListener('click',e=>{if(e.target.closest('[data-closeevent]')||e.target===dialog)dialog.close()});
 dialog.addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus()});
 mobileCalendar.addEventListener('change',()=>render());
-window.addEventListener('hashchange',()=>{dialog.close();render();window.scrollTo({top:0})});render();setInterval(tickDeadlines,1000);
+window.addEventListener('hashchange',()=>{deadlinePickerOpen=false;dialog.close();render();window.scrollTo({top:0})});render();setInterval(tickDeadlines,1000);
