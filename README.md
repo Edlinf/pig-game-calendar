@@ -51,7 +51,7 @@ python3 -m http.server 8000 --directory dist
 
 ## 访问统计
 
-`dist/index.html` 在 `</body>` 前接入 Cloudflare Web Analytics 官方 module 统计代码，使用站点专用的公开 beacon token。该标识用于浏览器上报，并非 Cloudflare 账户 API 密钥；保留此代码以免后续更新中断统计。统计站点主机名为 `edlinf.github.io`，在 Cloudflare 控制台的 Web Analytics 查看浏览量、访问次数、来源与设备等数据。接入后开始积累数据，访问次数不等于去重人数；数据是否收到以控制台为准。各游戏使用 hash 路由，分游戏统计是否可区分需实际核验。
+`dist/index.html` 在 `</body>` 前按域名和项目路径加载 Cloudflare Web Analytics 官方 module 统计代码，仅在 `edlinf.github.io/pig-game-calendar` 及其下级路径运行；ChatGPT Sites 副本、本地预览与其他项目不加载统计脚本。使用站点专用的公开 beacon token，该标识用于浏览器上报，并非 Cloudflare 账户 API 密钥；后续更新保留此代码与域名限制，换域名时同步调整加载条件和 Cloudflare 站点配置。在 Cloudflare 控制台的 Web Analytics 查看浏览量、访问次数、来源与设备等数据；已有副本访问记录不会因修改代码自动消失，可使用 `Host = edlinf.github.io` 筛选 GitHub 访问。访问次数不等于去重人数；数据是否收到以控制台为准。各游戏使用 hash 路由，分游戏统计是否可区分需实际核验。
 
 ## 每周更新
 
