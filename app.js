@@ -26,7 +26,7 @@ function status(e,now=Date.now()){
  if(hours<=72)return '3天内结束';
  return e.boundaryDate?'进行中 · 维护前截止':'进行中';
 }
-const isActive=e=>e.confirmed&&!e.milestone&&startTime(e)<=Date.now()&&endTime(e)>Date.now()&&(!e.boundaryDate||today<e.boundaryDate);
+const isActive=e=>e.confirmed&&!e.milestone&&startTime(e)<=Date.now()&&endTime(e)>Date.now()&&(!e.boundaryDate||dateAt(Date.now())<e.boundaryDate);
 function matchesDay(e,date){
  if(e.milestone)return date===e.start;
  const dayStart=new Date(date+'T00:00:00+08:00').getTime();
@@ -39,10 +39,14 @@ function dateText(e){return e.dateLabel||e.start+' — '+(e.end||'截止待公�
 function timingText(e){const rewards=GAME_EVENTS.filter(x=>x.parentEvent===e.id);return [e.timing,rewards.length?'领奖、兑换提醒：'+rewards.map(x=>x.short+'截止 '+deadlineText(x)).join('；')+'。':''].filter(Boolean).join(' ')}
 function deadlineText(e){
  if(e.deadlineLabel)return e.deadlineLabel;
+ if(e.boundaryDate)return e.boundaryDate+' 维护前 · 具体时刻待公告';
  if(e.datePrecision==='day')return e.lastDay.slice(5).replace('-','/')+' · 公告仅列日期';
- return new Date(endTime(e)-60000).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
+ if(!Number.isFinite(endTime(e)))return '截止待公告';
+ if(!e.endAt)return e.end+' · 具体时刻待核实';
+ const info=deadlineInfo(e);
+ return info.date.slice(5).replace('-','/')+' '+info.time+(info.note?' · '+info.note:'');
 }
-function card(e,full=false){const g=game(e.game),st=status(e);return `<article class="event-card" style="--accent:${g.color}"><div class="event-meta"><span class="game-label">${g.short}</span><span class="badge ${e.confirmed?'':'pending'}">${e.type}</span><span class="event-state ${st.includes('结束')&&st!=='已结束'?'urgent':''}">${st}</span></div><h3 ${full?'id="event-title"':''}>${escapeHtml(e.name)}</h3><div class="event-date">${escapeHtml(dateText(e))}</div><p>${escapeHtml(e.desc)}</p>${full?`<dl class="event-info"><dt>参与条件</dt><dd>${escapeHtml(e.condition||'以当期游戏内与官方说明为准')}</dd><dt>主要奖励</dt><dd>${escapeHtml(e.rewards||e.desc)}</dd><dt>活动详情</dt><dd>${escapeHtml(e.detail)}</dd>${timingText(e)?`<dt>时间说明</dt><dd>${escapeHtml(timingText(e))}</dd>`:''}</dl>`:`<button data-event="${e.id}" class="detail-button">查看详情</button>`}<div class="source">${ext(e.source,'资料来源')}${e.official?' · '+ext(e.official,'官方公告入口'):''}<br>${e.verification} · 核对 ${e.checked||'2026-09-17'}</div></article>`}
+function card(e,full=false){const g=game(e.game),st=status(e);return `<article class="event-card" style="--accent:${g.color}"><div class="event-meta"><span class="game-label">${g.short}</span><span class="badge ${e.confirmed?'':'pending'}">${e.type}</span><span class="event-state ${st.includes('结束')&&st!=='已结束'?'urgent':''}">${st}</span></div><h3 ${full?'id="event-title"':''}>${escapeHtml(e.name)}</h3><div class="event-date">${escapeHtml(dateText(e))}</div><p>${escapeHtml(e.desc)}</p>${full?`<dl class="event-info"><dt>参与条件</dt><dd>${escapeHtml(e.condition||'以当期游戏内与官方说明为准')}</dd><dt>主要奖励</dt><dd>${escapeHtml(e.rewards||e.desc)}</dd><dt>活动详情</dt><dd>${escapeHtml(e.detail)}</dd>${timingText(e)?`<dt>时间说明</dt><dd>${escapeHtml(timingText(e))}</dd>`:''}</dl>`:`<button data-event="${e.id}" class="detail-button">查看详情</button>`}<div class="source">${ext(e.source,'资料来源')}${e.official?' · '+ext(e.official,'官方公告入口'):''}${e.crossSource?' · '+ext(e.crossSource,'交叉核对来源'):''}<br>${e.verification} · 核对 ${e.checked||'2026-09-17'}</div></article>`}
 function wowNav(current='calendar'){return `<nav class="subnav" aria-label="魔兽世界内容">${[['wow','活动日历','calendar'],['raid','团队副本','raid'],['dungeon','大秘境','dungeon'],['timewalking','时光漫游','timewalking']].map(([path,label,key])=>`<a href="#${path}" class="${current===key?'active':''}">${label}</a>`).join('')}</nav>`}
 function deadlines(events){const cutoff=Date.now()+7*86400000;const list=events.filter(e=>e.confirmed&&!e.milestone&&isActive(e)&&endTime(e)<=cutoff).sort((a,b)=>endTime(a)-endTime(b)).slice(0,4);return list.length?`<section class="deadline-strip" aria-label="未来七天截止提醒"><strong>近期截止</strong>${list.map(e=>`<button data-event="${e.id}" style="--accent:${game(e.game).color}"><span>${game(e.game).short} · ${e.short}</span><time>${escapeHtml(deadlineText(e))}</time></button>`).join('')}</section>`:''}
 const clockAt=(time,seconds=false)=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',...(seconds?{second:'2-digit'}:{}),hourCycle:'h23'}).format(new Date(time));
