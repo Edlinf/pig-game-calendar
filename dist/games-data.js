@@ -32,7 +32,7 @@ const GAMES=[
     "region": "国服",
     "checked": "2026-10-11",
     "source": "https://endfield.hypergryph.com/news",
-    "note": "已复核国服版本公告，补齐网页活动、挽弓试炼、重构寻访与申领、通行证及补偿邮件。10月15日版本更新已确认，维护与通行证结算时刻仍待公告；幽寒申领只公布相对寻访次数，无法确定关闭日期。"
+    "note": "已复核国服版本公告，补齐网页活动、挽弓试炼、重构寻访与申领。10月15日版本更新已确认，维护时刻仍待公告；幽寒申领只公布相对寻访次数，无法确定关闭日期。通行证与版本更新补偿不列为活动。"
   },
   {
     "id": "arknights",
@@ -65,7 +65,7 @@ const GAMES=[
     "region": "国服 · 天空岛 / 世界树",
     "checked": "2026-10-11",
     "source": "https://ys.mihoyo.com/main/news",
-    "note": "核对7.1国服官方公告及官方图片排期。逐月节10月12日03:59结束，二期祈愿10月13日18:00开启；判测预测到10月20日09:59，公示期延续至10月23日09:59。补入七圣召唤、千星奇域装扮及纪游、至冬探索奖励和已公布挑战节点。周年邮件与只列轮换日的内容不推算精确时刻。"
+    "note": "核对7.1国服官方公告及官方图片排期。逐月节10月12日03:59结束，二期祈愿10月13日18:00开启；判测预测到10月20日09:59，公示期延续至10月23日09:59。补入七圣召唤、千星奇域装扮、至冬探索奖励和已公布挑战节点。纪行、纪游与版本固定赛季不列为活动。周年邮件与只列轮换日的内容不推算精确时刻。"
   },
   {
     "id": "hsr",
@@ -76,7 +76,7 @@ const GAMES=[
     "region": "国服",
     "checked": "2026-10-10",
     "source": "https://sr.mihoyo.com/news",
-    "note": "核对 TapTap 崩坏：星穹铁道官方账号的4.6版本说明、速览排期图和活动公告，收录限时玩法、签到、无名勋礼、跃迁、双倍掉落、挑战轮换与网页活动。版本更新后开启的条目不推算精确开服时刻；常驻星际碰碰不设截止。领奖与兑换随主体活动说明。"
+    "note": "核对 TapTap 崩坏：星穹铁道官方账号的4.6版本说明、速览排期图和活动公告，收录限时玩法、签到、跃迁、双倍掉落、挑战轮换与网页活动。无名勋礼不列为活动。版本更新后开启的条目不推算精确开服时刻；常驻星际碰碰不设截止。领奖与兑换随主体活动说明。"
   }
 ];
 const GAME_EVENTS=EVENTS.map(e=>({...e,game:'wow',type:e.type||(e.milestone?'版本节点':'活动'),verification:e.verification||(e.confirmed?'国服公告核对':'国服排期待核实')}));
@@ -277,3 +277,9 @@ const RELATED_REWARD_WINDOWS={
  'fgo-gudaguda-shop':'fgo-gudaguda'
 };
 for(const e of GAME_EVENTS)if(RELATED_REWARD_WINDOWS[e.id])e.parentEvent=RELATED_REWARD_WINDOWS[e.id];
+
+// Version-bound progression and routine version items are kept for source history,
+// but are not listed as independent activities in the overview or game calendars.
+const VERSION_ROUTINE_TYPES=new Set(['通行证','纪行','千星纪游','无名勋礼']);
+const VERSION_ROUTINE_IDS=new Set(['gs-miliastra-season','end-snow-mail-compensation']);
+for(const e of GAME_EVENTS)if(VERSION_ROUTINE_TYPES.has(e.type)||VERSION_ROUTINE_IDS.has(e.id))e.versionRoutine=true;
