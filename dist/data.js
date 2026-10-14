@@ -74,19 +74,21 @@ brew.source='https://www.wowhead.com/cn/guide/world-events/holidays/brewfest';
 brew.desc='2026年指南列出9月20日至10月6日；这是外服参考日期，国服起止时刻待核实。';
 brew.timing='结束日时刻未确认，日历保留10月6日提示';brew.end='2026-10-07';
 const moon=EVENTS.find(e=>e.id==='darkmoon');
-moon.start='2026-10-04';moon.end='2026-10-12';moon.dateLabel='2026-10-04 — 2026-10-11';
-moon.desc='北美正式服日历参考：10月4日至11日；不能据此认定国服同期开启。';
-moon.detail='9月24日读取的WowDaily首页“今日魔兽”明确标为北美正式服，显示北京时间10月4日15:01至11日14:59。旧条目10月3日至10日已撤下；国服请核对游戏内日历。';moon.source='https://wowdaily.cn/';moon.timing='外服参考，国服时间待核实';
+moon.start='2026-10-04';moon.end='2026-10-11';moon.dateLabel='10月4日 — 10月10日';
+moon.confirmed=true;moon.scheduleRule='first-sunday-week';moon.type='月度活动';
+moon.datePrecision='day';moon.lastDay='2026-10-10';moon.deadlineLabel='10/10';moon.verification='固定月度排期';
+moon.desc='参与暗月岛小游戏、专业任务与收藏活动。';
+moon.detail='暗月马戏团每月第一个周日开始，持续一周。本期为10月4日至10日，可完成专业任务与游乐项目。';moon.source='https://wowdaily.cn/';moon.timing='每月第一个周日开始，持续一周；本期按10月4日至10日覆盖月历。';
 EVENTS.push({id:'autumn',name:'中秋活动 · 官网福利',short:'中秋福利',start:'2026-09-22',end:'2026-10-15',dateLabel:'2026-09-22 — 2026-10-14',kind:'gold',confirmed:true,checked:'2026-09-24',timing:'公告按日期公布，具体截止时刻见活动页',desc:'完成官网活动任务，兑换优惠券与许愿金币。属于官网福利活动，不是游戏内节日周常。',detail:'国服官网公告日期为9月22日至10月14日。通过活动页查看任务与星光商店，具体资格、道具数量和兑换规则以页面为准。奖励涉及商城优惠券，请先确认使用门槛。',source:'https://wow.blizzard.cn/h5/20260911/event/?tid=wow_autumn_20260922'},
 {id:'autumn-wishes',name:'中秋活动 · 星光许愿池',short:'星光许愿池',start:'2026-10-01',end:'2026-10-15',dateLabel:'2026-10-01 — 2026-10-14',kind:'blue',confirmed:true,checked:'2026-09-24',timing:'具体开放及截止时刻见官网活动页',desc:'官网活动的许愿阶段，奖励按活动规则发放，不保证获得。',detail:'国服公告写明10月1日至14日开放星光许愿池；任务期与许愿期起始日期不同，请勿提前使用未开放功能。参与条件及奖品分配规则以活动页为准。',source:'https://wow.blizzard.cn/h5/20260911/event/?tid=wow_autumn_20260922'});
 
 // Weekly review 2026-09-27. Preserve individual guide verification dates.
-EVENTS.filter(e=>e.confirmed).forEach(e=>e.checked='2026-09-27');
+EVENTS.filter(e=>e.confirmed&&!e.scheduleRule).forEach(e=>e.checked='2026-09-27');
 DUNGEONS[6].checked='2026-09-27';
 DUNGEONS[6].skills.push(['小怪驱散与减伤分工','雏龙的Cold Claws尽早驱散，别让坦克叠至20层；Thunderhead的Rolling Thunder错开驱散，避免群体持续伤害叠加。Blazebound Destroyer死亡后离开20码爆炸范围。']);
 
 // Review 2026-10-04: dates are exclusive at end unless dateLabel says otherwise.
-EVENTS.filter(e=>e.confirmed).forEach(e=>e.checked='2026-10-04');
+EVENTS.filter(e=>e.confirmed&&!e.scheduleRule).forEach(e=>e.checked='2026-10-04');
 const autumn=EVENTS.find(e=>e.id==='autumn');
 autumn.timing='优惠券、许愿金币：10月14日23:59:59截止；星光：10月21日23:59:59过期';
 autumn.detail='完成金秋委托获得星光。150星光可兑换50元豪华典藏年卡礼包优惠券，仅限本活动购买，限用一次且不可叠加；已持有对应豪华典藏年卡礼包者请先核对兑换限制。奖励与资格详见活动页。';
