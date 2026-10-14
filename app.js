@@ -20,7 +20,7 @@ function status(e,now=Date.now()){
  if(e.scheduleReference==='us-calendar'){
   if(now<startTime(e))return '即将开始 · 换算参考';
   if(now>=endTime(e))return '已结束 · 换算参考';
-  if(e.referenceResetDate&&dateAt(now)>=e.referenceResetDate)return '重置日 · 待复核';
+  if(e.referenceResetDate&&!e.endAt&&dateAt(now)>=e.referenceResetDate)return '重置日 · 待复核';
   return '进行中 · 换算参考';
  }
  if(!e.confirmed)return '参考排期';
@@ -33,7 +33,7 @@ function status(e,now=Date.now()){
  if(hours<=72)return '3天内结束';
  return e.boundaryDate?'进行中 · 维护前截止':'进行中';
 }
-const isActive=e=>hasSchedule(e)&&!e.milestone&&startTime(e)<=Date.now()&&endTime(e)>Date.now()&&(!e.boundaryDate||dateAt(Date.now())<e.boundaryDate)&&(!e.referenceResetDate||dateAt(Date.now())<e.referenceResetDate);
+const isActive=e=>hasSchedule(e)&&!e.milestone&&startTime(e)<=Date.now()&&endTime(e)>Date.now()&&(!e.boundaryDate||dateAt(Date.now())<e.boundaryDate)&&(!e.referenceResetDate||!!e.endAt||dateAt(Date.now())<e.referenceResetDate);
 function matchesDay(e,date){
  if(e.milestone)return date===e.start;
  const dayStart=new Date(date+'T00:00:00+08:00').getTime();
@@ -58,6 +58,7 @@ function wowNav(current='calendar'){return `<nav class="subnav" aria-label="魔�
 function deadlines(events){const cutoff=Date.now()+7*86400000;const list=events.filter(e=>hasSchedule(e)&&!e.milestone&&isActive(e)&&endTime(e)<=cutoff).sort((a,b)=>endTime(a)-endTime(b)).slice(0,4);return list.length?`<section class="deadline-strip" aria-label="未来七天截止提醒"><strong>近期截止</strong>${list.map(e=>`<button data-event="${e.id}" style="--accent:${game(e.game).color}"><span>${game(e.game).short} · ${e.short}</span><time>${escapeHtml(deadlineText(e))}</time></button>`).join('')}</section>`:''}
 const clockAt=(time,seconds=false)=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',...(seconds?{second:'2-digit'}:{}),hourCycle:'h23'}).format(new Date(time));
 function deadlineInfo(e){
+ if(e.cutoffBasis==='user-standard'&&e.endAt)return {date:dateAt(endTime(e)),time:clockAt(endTime(e)),note:e.scheduleReference?'换算 · 统一截止':'统一截止',precise:true};
  if(e.scheduleReference==='us-calendar')return {date:e.lastDay,time:e.referenceResetDate?'周常重置前':'具体时刻待核对',note:'美服换算',precise:false};
  if(e.boundaryDate)return {date:e.boundaryDate,time:'维护前',note:'具体时刻待公告',precise:false};
  if(!Number.isFinite(endTime(e)))return {date:'待公告',time:'',note:'',precise:false};
@@ -91,11 +92,11 @@ function setDeadlinePickerOpen(open,focus=false){
 }
 function countdownState(e,now=Date.now()){
  if(endTime(e)<=now)return {value:'已结束',note:e.scheduleReference?'换算参考':'',urgent:false};
- if(e.scheduleReference==='us-calendar'){
+ if(e.scheduleReference==='us-calendar'&&e.cutoffBasis!=='user-standard'){
   const days=Math.round((Date.parse(e.lastDay+'T00:00:00+08:00')-Date.parse(dateAt(now)+'T00:00:00+08:00'))/86400000);
   return {value:days>0?days+' 天':e.referenceResetDate?'今天重置':'今天截止',note:'换算参考 · 按日期',urgent:false};
  }
- if(!e.confirmed)return {value:'待核实',note:'参考排期',urgent:false};
+ if(!e.confirmed&&e.cutoffBasis!=='user-standard')return {value:'待核实',note:'参考排期',urgent:false};
  if(e.boundaryDate||!Number.isFinite(endTime(e)))return {value:'待公告',note:'截止时刻',urgent:false};
  if(e.datePrecision==='day'){
   const days=Math.round((Date.parse(e.lastDay+'T00:00:00+08:00')-Date.parse(dateAt(now)+'T00:00:00+08:00'))/86400000);
@@ -103,7 +104,7 @@ function countdownState(e,now=Date.now()){
  }
  if(!deadlineInfo(e).precise)return {value:'待核实',note:'截止时刻',urgent:false};
  const seconds=Math.ceil((endTime(e)-now)/1000),pad=n=>String(n).padStart(2,'0');
- return {value:pad(Math.floor(seconds/86400))+' 天 '+pad(Math.floor(seconds/3600)%24)+':'+pad(Math.floor(seconds/60)%60)+':'+pad(seconds%60),note:deadlineInfo(e).note==='预计'?'预计结束':'',urgent:seconds<=86400};
+ return {value:pad(Math.floor(seconds/86400))+' 天 '+pad(Math.floor(seconds/3600)%24)+':'+pad(Math.floor(seconds/60)%60)+':'+pad(seconds%60),note:e.cutoffBasis==='user-standard'?(e.scheduleReference?'换算参考 · 统一截止':'统一截止'):deadlineInfo(e).note==='预计'?'预计结束':'',urgent:seconds<=86400};
 }
 function countdownMarkup(e,now){const c=countdownState(e,now);return `<span class="countdown-value">${c.value}</span>${c.note?`<small>${c.note}</small>`:''}`}
 function deadlineTable(events,now,label){return `<div class="deadline-table-wrap"><table class="deadline-table"><caption class="sr-only">${label}，按截止时间从近到远排列，北京时间</caption><colgroup><col class="col-game"><col class="col-event"><col class="col-type"><col class="col-period"><col class="col-deadline"><col class="col-countdown"></colgroup><thead><tr><th scope="col">游戏</th><th scope="col">活动</th><th scope="col">类型</th><th scope="col">活动时间</th><th scope="col" aria-sort="ascending">截止时间</th><th scope="col">倒计时</th></tr></thead><tbody>${events.length?events.map(e=>{const g=game(e.game),info=deadlineInfo(e),c=countdownState(e,now);return `<tr data-deadline-row="${e.id}" style="--accent:${g.color}"><td data-label="游戏"><a class="deadline-game-name" href="#${g.id}" title="${escapeHtml(g.name)}">${g.short}</a></td><td data-label="活动"><button class="deadline-event-name" data-event="${e.id}">${escapeHtml(e.name)}</button><span class="deadline-state" data-event-state="${e.id}">${status(e,now)}</span></td><td data-label="类型">${escapeHtml(e.type)}</td><td data-label="活动时间" class="deadline-period">${escapeHtml(dateText(e))}</td><td data-label="截止时间" class="deadline-date"><strong>${escapeHtml(info.date)}</strong>${info.time?`<span>${escapeHtml(info.time)}</span>`:''}${info.note?`<small>${escapeHtml(info.note)}</small>`:''}</td><td data-label="倒计时" class="deadline-countdown${c.urgent?' urgent':''}" data-countdown="${e.id}" aria-live="off">${countdownMarkup(e,now)}</td></tr>`}).join(''):'<tr><td colspan="6" class="deadline-empty">暂无符合筛选条件的活动。</td></tr>'}</tbody></table></div>`}

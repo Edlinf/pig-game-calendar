@@ -10,7 +10,7 @@ const GAMES=[
     "region": "国服 · 正式服",
     "checked": "2026-10-14",
     "source": "https://wow.blizzard.cn/",
-    "note": "按美服正式服日历补入本期熊猫人漫游、后续漫游及奖励周，周常对应国服周四；万圣节和11月暗月按地区日历日期参考。换算条目默认显示并单独标注，国服精确时刻与副本池仍待核对。既有国服公告按原核对日保留，NGA英雄参考继续标明PTR性质。"
+    "note": "按美服正式服日历补入本期熊猫人漫游、后续漫游及奖励周，周常对应国服周四；万圣节和11月暗月按地区日历日期参考。换算条目默认显示并单独标注，周常截止统一按05:00，国服实际轮换与副本池仍待核对。既有国服公告按原核对日保留，NGA英雄参考继续标明PTR性质。"
   },
   {
     "id": "ff14",
@@ -32,7 +32,7 @@ const GAMES=[
     "region": "国服",
     "checked": "2026-10-11",
     "source": "https://endfield.hypergryph.com/news",
-    "note": "已复核国服版本公告，补齐网页活动、挽弓试炼、重构寻访与申领。10月15日版本更新已确认，维护时刻仍待公告；幽寒申领只公布相对寻访次数，无法确定关闭日期。通行证与版本更新补偿不列为活动。"
+    "note": "已复核国服版本公告，补齐网页活动、挽弓试炼、重构寻访与申领。10月15日版本更新已确认，维护前截止统一按06:00；幽寒申领只公布相对寻访次数，无法确定关闭日期。通行证与版本更新补偿不列为活动。"
   },
   {
     "id": "arknights",
@@ -104,7 +104,7 @@ addEvent("endfield","end-runners","跑者运动会","跑者运动会","趣味活
 addEvent("endfield","end-signin","陵水渡秋 · 七日签到","七日签到","签到","2026-10-01T12:00:00+08:00",null,"活动期间累计签到七日，领取奖励。","累计七日签到后领取对应奖励，截止于下一版本维护前。","1500嵌晶玉、跑动行进头像与活动特饮","活动期间累计完成七日签到",{"start":"2026-10-01","end":null,"confirmed":true,"checked":"2026-10-11","source":"https://endfield.hypergryph.com/news/2653","verification":"国服官方公告","boundaryDate":"2026-10-15","dateLabel":"10月1日 12:00 — 下一版本维护前","official":"https://endfield.hypergryph.com/news/2653"});
 addEvent("endfield","end-sanity","理智补给","理智补给","日常福利","2026-10-08T04:00:00+08:00","2026-10-15T04:00:00+08:00","每天完成指定任务，领取理智补给。","在本期活动时间内完成指定任务，并及时领取。","理智消耗许可、应急理智加强剂","完成游戏内指定任务",{"start":"2026-10-08","end":"2026-10-15","confirmed":true,"checked":"2026-10-11","source":"https://endfield.hypergryph.com/news/2653","verification":"国服官方公告","dateLabel":"10月8日 04:00 — 10月15日 04:00","official":"https://endfield.hypergryph.com/news/2653"});
 addEvent("endfield","end-monument","丰碑留名 · 刻影","刻影挑战","挑战","2026-10-05T12:00:00+08:00","2026-10-19T04:00:00+08:00","完成影拓丰碑“幽影刻形”对应挑战，领取限时奖励。","新系列包含四个关卡；关卡首通与限时活动领奖为不同事项。","1200嵌晶玉、高阶培养自选箱Ⅰ等","解锁对应玩法并完成挑战",{"start":"2026-10-05","end":"2026-10-19","confirmed":true,"checked":"2026-10-11","source":"https://endfield.hypergryph.com/news/2653","verification":"国服官方公告","dateLabel":"10月5日 12:00 — 10月19日 04:00","official":"https://endfield.hypergryph.com/news/2653"});
-addEvent("endfield","end-patch","丹青渡 · 新版本开启","丹青渡更新","版本节点","2026-10-15",null,"新版本与云·终末地上线，加入工业、战斗和养成体验调整。","前瞻导览页可领取节目奖励。当期活动精确起止时间需继续核对公告；这里只标上线日期。","前瞻导览：1000嵌晶玉及养成物资","导览领奖与版本内容资格见官方页面",{"start":"2026-10-15","end":null,"confirmed":true,"checked":"2026-10-11","source":"https://endfield.hypergryph.com/news/3805","verification":"国服官方公告","milestone":true,"dateLabel":"10月15日开启 · 具体维护时刻待公告","startPrecision":"day","startAt":null});
+addEvent("endfield","end-patch","丹青渡 · 新版本开启","丹青渡更新","版本节点","2026-10-15",null,"新版本与云·终末地上线，加入工业、战斗和养成体验调整。","前瞻导览页可领取节目奖励。当期活动精确起止时间需继续核对公告；这里只标上线日期。","前瞻导览：1000嵌晶玉及养成物资","导览领奖与版本内容资格见官方页面",{"start":"2026-10-15","end":null,"confirmed":true,"checked":"2026-10-11","source":"https://endfield.hypergryph.com/news/3805","verification":"国服官方公告","milestone":true,"dateLabel":"10月15日维护后开放","startPrecision":"day","startAt":null});
 const sea={official:'https://ak.hypergryph.com/news/5101.html'};
 addEvent("arknights","ark-sea","昨日海 · 活动关卡","昨日海关卡","SideStory","2026-10-09T12:00:00+08:00","2026-10-23T04:00:00+08:00","开放雷亚-伊比利亚关卡，完成打捞方案并收集代币。","公告整体活动页延续至10月30日，但关卡10月23日03:59关闭。","活动干员旅骨、家具、模组材料与代币","通关主线1-10",{"start":"2026-10-09","end":"2026-10-23","confirmed":true,"checked":"2026-10-11","source":"https://ak.hypergryph.com/news/5101.html","verification":"国服官方公告","official":"https://ak.hypergryph.com/news/5101.html","dateLabel":"10月9日 12:00 — 10月23日 03:59"});
 addEvent("arknights","ark-sea-ex","昨日海 · 后半关卡开启","昨日海后半","解锁节点","2026-10-16T16:00:00+08:00",null,"“我们的伊比利亚”关卡解锁。","关卡同样于10月23日03:59关闭；节点只标解锁日，不表示只开放一天。","关卡与活动任务奖励","完成对应活动前置",{"start":"2026-10-16","end":null,"confirmed":true,"checked":"2026-10-11","source":"https://ak.hypergryph.com/news/5101.html","verification":"国服官方公告","official":"https://ak.hypergryph.com/news/5101.html","milestone":true,"dateLabel":"10月16日 16:00 开放"});
@@ -748,3 +748,29 @@ const WOW_US_CALENDAR_20261014=[
   }
 ];
 GAME_EVENTS.push(...WOW_US_CALENDAR_20261014);
+
+// User-selected cutoff conventions (Asia/Shanghai), applied to the matching
+// deadline categories only. Source/rotation verification remains independent.
+const STANDARD_DEADLINE_HOURS={wowWeekly:'05:00',endfieldMaintenance:'06:00'};
+for(const e of GAME_EVENTS){
+ const wow=e.game==='wow'&&e.referenceResetDate;
+ const endfield=e.game==='endfield'&&e.boundaryDate;
+ if(!wow&&!endfield)continue;
+ const date=wow?e.referenceResetDate:e.boundaryDate;
+ const clock=wow?STANDARD_DEADLINE_HOURS.wowWeekly:STANDARD_DEADLINE_HOURS.endfieldMaintenance;
+ e.cutoffBasis='user-standard';
+ e.cutoffChecked='2026-10-14';
+ e.endAt=date+'T'+clock+':00+08:00';
+ e.end=date;
+ delete e.datePrecision;
+ delete e.lastDay;
+ delete e.boundaryDate;
+ e.deadlineLabel=date.slice(5).replace('-','/')+' '+clock;
+ const opening=(e.dateLabel||e.start).split(' — ')[0];
+ e.dateLabel=opening+' — '+date+' '+clock+(wow?' · 换算参考':' · 维护前');
+ const convention=wow?'周常结束按用户指定统一采用北京时间05:00；活动轮换仍为美服日历换算参考。':'版本维护前截止按用户指定统一采用北京时间06:00。';
+ e.timing=[(e.timing||'').replace('日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。',''),convention].filter(Boolean).join(' ');
+ if(endfield){
+  for(const field of ['desc','detail'])if(e[field])e[field]=e[field].replaceAll('具体关服时刻待公告','维护开始时间统一按06:00计').replaceAll('维护时刻仍待官方公告','维护开始时间统一按06:00计').replaceAll('具体时刻待公告','维护开始时间统一按06:00计').replaceAll('维护时刻仍待公告','维护开始时间统一按06:00计');
+ }
+}
