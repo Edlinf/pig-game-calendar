@@ -10,7 +10,7 @@ const GAMES=[
     "region": "国服 · 正式服",
     "checked": "2026-10-14",
     "source": "https://wow.blizzard.cn/",
-    "note": "按美服正式服日历补入本期熊猫人漫游、后续漫游及奖励周，周常对应国服周四；万圣节和11月暗月按地区日历日期参考。换算条目默认显示并单独标注，周常截止统一按05:00，国服实际轮换与副本池仍待核对。既有国服公告按原核对日保留，NGA英雄参考继续标明PTR性质。"
+    "note": "已收录本期熊猫人漫游、后续漫游及奖励周的确定排期，周常每周四05:00结束。暗月马戏团每月第一个周日开始，持续一周；万圣节日期保留美服日历参考。既有国服公告按原核对日保留，NGA英雄参考继续标明PTR性质。"
   },
   {
     "id": "ff14",
@@ -32,7 +32,7 @@ const GAMES=[
     "region": "国服",
     "checked": "2026-10-11",
     "source": "https://endfield.hypergryph.com/news",
-    "note": "已复核国服版本公告，补齐网页活动、挽弓试炼、重构寻访与申领。10月15日版本更新已确认，维护前截止统一按06:00；幽寒申领只公布相对寻访次数，无法确定关闭日期。通行证与版本更新补偿不列为活动。"
+    "note": "已复核国服版本公告，补齐网页活动、挽弓试炼、重构寻访与申领。10月15日版本更新已确认，维护前活动截至06:00；幽寒申领只公布相对寻访次数，无法确定关闭日期。通行证与版本更新补偿不列为活动。"
   },
   {
     "id": "arknights",
@@ -299,20 +299,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-10-15",
-    "referenceResetDate": "2026-10-15",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/643-timewalking-dungeon-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "10月08日 — 10月15日 周常重置前 · 换算参考",
-    "deadlineLabel": "10/15 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-10-08 — 2026-10-15 05:00",
+    "deadlineLabel": "10/15 05:00",
     "desc": "重访熊猫人之谜地下城，参与本期时光漫游。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-10-06—2026-10-13；源时区 America/Los_Angeles，换成北京时间为 10/06 23:00—10/13 22:00。区域轮换另对齐国服周四，得到 2026-10-08—2026-10-15 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -321,7 +319,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-10-06T23:00:00+08:00",
       "endBeijing": "2026-10-13T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-10-15"
   },
   {
     "id": "wow-us-pet-20261015",
@@ -336,20 +335,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-10-22",
-    "referenceResetDate": "2026-10-22",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/565-pet-battle-bonus-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "10月15日 — 10月22日 周常重置前 · 换算参考",
-    "deadlineLabel": "10/22 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-10-15 — 2026-10-22 05:00",
+    "deadlineLabel": "10/22 05:00",
     "desc": "活动期间宠物对战经验提高；具体任务和奖励以游戏内为准。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-10-13—2026-10-20；源时区 America/Los_Angeles，换成北京时间为 10/13 23:00—10/20 22:00。区域轮换另对齐国服周四，得到 2026-10-15—2026-10-22 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -358,7 +355,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-10-13T23:00:00+08:00",
       "endBeijing": "2026-10-20T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-10-22"
   },
   {
     "id": "wow-us-bg-20261015",
@@ -373,20 +371,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-10-22",
-    "referenceResetDate": "2026-10-22",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/563-battleground-bonus-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "10月15日 — 10月22日 周常重置前 · 换算参考",
-    "deadlineLabel": "10/22 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-10-15 — 2026-10-22 05:00",
+    "deadlineLabel": "10/22 05:00",
     "desc": "活动期间随机战场提供额外荣誉。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-10-13—2026-10-20；源时区 America/Los_Angeles，换成北京时间为 10/13 23:00—10/20 22:00。区域轮换另对齐国服周四，得到 2026-10-15—2026-10-22 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -395,7 +391,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-10-13T23:00:00+08:00",
       "endBeijing": "2026-10-20T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-10-22"
   },
   {
     "id": "wow-us-delves-20261022",
@@ -410,20 +407,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-10-29",
-    "referenceResetDate": "2026-10-29",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/1559-delves-bonus-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "10月22日 — 10月29日 周常重置前 · 换算参考",
-    "deadlineLabel": "10/29 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-10-22 — 2026-10-29 05:00",
+    "deadlineLabel": "10/29 05:00",
     "desc": "本期地下堡提供额外奖励，具体加成见游戏内事件说明。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-10-20—2026-10-27；源时区 America/Los_Angeles，换成北京时间为 10/20 23:00—10/27 22:00。区域轮换另对齐国服周四，得到 2026-10-22—2026-10-29 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -432,7 +427,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-10-20T23:00:00+08:00",
       "endBeijing": "2026-10-27T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-10-29"
   },
   {
     "id": "wow-us-wod-20261029",
@@ -447,20 +443,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-11-05",
-    "referenceResetDate": "2026-11-05",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/1056-timewalking-dungeon-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "10月29日 — 11月05日 周常重置前 · 换算参考",
-    "deadlineLabel": "11/05 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-10-29 — 2026-11-05 05:00",
+    "deadlineLabel": "11/05 05:00",
     "desc": "重访德拉诺之王地下城，参与本期时光漫游。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-10-27—2026-11-03；源时区 America/Los_Angeles，换成北京时间为 10/27 23:00—11/03 23:00。区域轮换另对齐国服周四，得到 2026-10-29—2026-11-05 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -469,7 +463,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-10-27T23:00:00+08:00",
       "endBeijing": "2026-11-03T23:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-11-05"
   },
   {
     "id": "wow-us-dungeons-20261105",
@@ -484,20 +479,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-11-12",
-    "referenceResetDate": "2026-11-12",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/1802-midnight-dungeon-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "11月05日 — 11月12日 周常重置前 · 换算参考",
-    "deadlineLabel": "11/12 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-11-05 — 2026-11-12 05:00",
+    "deadlineLabel": "11/12 05:00",
     "desc": "至暗之夜地下城最终首领提供额外掉落物品。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-11-03—2026-11-10；源时区 America/Los_Angeles，换成北京时间为 11/03 23:00—11/10 22:00。区域轮换另对齐国服周四，得到 2026-11-05—2026-11-12 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -506,7 +499,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-11-03T23:00:00+08:00",
       "endBeijing": "2026-11-10T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-11-12"
   },
   {
     "id": "wow-us-arena-20261112",
@@ -521,20 +515,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-11-19",
-    "referenceResetDate": "2026-11-19",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/561-arena-skirmish-bonus-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "11月12日 — 11月19日 周常重置前 · 换算参考",
-    "deadlineLabel": "11/19 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-11-12 — 2026-11-19 05:00",
+    "deadlineLabel": "11/19 05:00",
     "desc": "参与本期竞技场练习赛奖励事件；加成及任务见游戏内。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-11-10—2026-11-17；源时区 America/Los_Angeles，换成北京时间为 11/10 23:00—11/17 22:00。区域轮换另对齐国服周四，得到 2026-11-12—2026-11-19 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -543,7 +535,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-11-10T23:00:00+08:00",
       "endBeijing": "2026-11-17T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-11-19"
   },
   {
     "id": "wow-us-legion-20261119",
@@ -558,20 +551,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-11-26",
-    "referenceResetDate": "2026-11-26",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/1263-timewalking-dungeon-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "11月19日 — 11月26日 周常重置前 · 换算参考",
-    "deadlineLabel": "11/26 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-11-19 — 2026-11-26 05:00",
+    "deadlineLabel": "11/26 05:00",
     "desc": "重访军团再临地下城，参与本期时光漫游。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-11-17—2026-11-24；源时区 America/Los_Angeles，换成北京时间为 11/17 23:00—11/24 22:00。区域轮换另对齐国服周四，得到 2026-11-19—2026-11-26 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -580,7 +571,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-11-17T23:00:00+08:00",
       "endBeijing": "2026-11-24T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-11-26"
   },
   {
     "id": "wow-us-wq-20261126",
@@ -595,20 +587,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-12-03",
-    "referenceResetDate": "2026-12-03",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/592-world-quest-bonus-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "11月26日 — 12月03日 周常重置前 · 换算参考",
-    "deadlineLabel": "12/03 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-11-26 — 2026-12-03 05:00",
+    "deadlineLabel": "12/03 05:00",
     "desc": "完成世界任务获取本期额外奖励；具体声望加成和任务见游戏内。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-11-24—2026-12-01；源时区 America/Los_Angeles，换成北京时间为 11/24 23:00—12/01 22:00。区域轮换另对齐国服周四，得到 2026-11-26—2026-12-03 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -617,7 +607,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-11-24T23:00:00+08:00",
       "endBeijing": "2026-12-01T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-12-03"
   },
   {
     "id": "wow-us-bfa-20261210",
@@ -632,20 +623,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2026-12-17",
-    "referenceResetDate": "2026-12-17",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/1669-timewalking-dungeon-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "12月10日 — 12月17日 周常重置前 · 换算参考",
-    "deadlineLabel": "12/17 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-12-10 — 2026-12-17 05:00",
+    "deadlineLabel": "12/17 05:00",
     "desc": "重访争霸艾泽拉斯地下城，参与本期时光漫游。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-12-08—2026-12-15；源时区 America/Los_Angeles，换成北京时间为 12/08 23:00—12/15 22:00。区域轮换另对齐国服周四，得到 2026-12-10—2026-12-17 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -654,7 +643,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-12-08T23:00:00+08:00",
       "endBeijing": "2026-12-15T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2026-12-17"
   },
   {
     "id": "wow-us-sl-20261231",
@@ -669,20 +659,18 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "datePrecision": "day",
     "lastDay": "2027-01-07",
-    "referenceResetDate": "2027-01-07",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://www.wowdb.com/world-events/1703-timewalking-dungeon-event",
     "crossSource": "https://www.wowdb.com/world-events/weekly/",
-    "verification": "美服正式服日历 → 国服周常换算参考",
-    "dateLabel": "12月31日 — 01月07日 周常重置前 · 换算参考",
-    "deadlineLabel": "01/07 周常重置前 · 换算参考",
+    "verification": "周常活动日历",
+    "dateLabel": "2026-12-31 — 2027-01-07 05:00",
+    "deadlineLabel": "01/07 05:00",
     "desc": "重访暗影国度地下城，参与本期时光漫游。",
-    "detail": "按用户指定采用美服正式服日历的本期顺序，并将美服周二的周常窗口对应到国服同周周四。未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
+    "detail": "未核实国服实际可排副本池、参与等级和周常任务奖励，不把旧版本奖励数值直接套入。",
     "rewards": "本期奖励事件奖励；数量与物品等级以国服游戏内为准",
     "condition": "解锁对应玩法并满足国服游戏内参与条件",
-    "timing": "来源美服当地日历：2026-12-29—2027-01-05；源时区 America/Los_Angeles，换成北京时间为 12/29 23:00—01/05 22:00。区域轮换另对齐国服周四，得到 2026-12-31—2027-01-07 重置前。日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。",
+    "timing": "周常每周四北京时间05:00结束。",
     "usCalendar": {
       "region": "US",
       "timeZone": "America/Los_Angeles",
@@ -691,7 +679,8 @@ const WOW_US_CALENDAR_20261014=[
       "startBeijing": "2026-12-29T23:00:00+08:00",
       "endBeijing": "2027-01-05T22:00:00+08:00",
       "mapping": "US-Tuesday-to-CN-Thursday"
-    }
+    },
+    "weeklyResetDate": "2027-01-07"
   },
   {
     "id": "wow-us-hallows-end-2026",
@@ -733,32 +722,31 @@ const WOW_US_CALENDAR_20261014=[
     "endAt": null,
     "lastDay": "2026-11-07",
     "datePrecision": "day",
-    "confirmed": false,
-    "scheduleReference": "us-calendar",
+    "confirmed": true,
     "checked": "2026-10-14",
     "source": "https://wow-achievement-plan.com/events",
-    "verification": "美服活动月历 → 国服日期参考",
-    "dateLabel": "11月1日 — 11月7日 · 美服日历参考",
-    "deadlineLabel": "11/07 · 美服日历参考",
+    "verification": "固定月度排期",
+    "dateLabel": "11月1日 — 11月7日",
+    "deadlineLabel": "11/07",
     "desc": "参与暗月岛小游戏、专业任务与收藏活动。",
-    "detail": "采用已读取月历列出的11月1日至7日窗口；国服开放和关闭时刻仍待核对，不仅凭每月第一周日规则生成未公布的远期活动。",
+    "detail": "暗月马戏团每月第一个周日开始，持续一周。本期为11月1日至7日，可参与专业任务、小游戏与收藏活动。",
     "rewards": "暗月奖券、收藏和专业任务奖励",
     "condition": "前往暗月岛，满足相应任务或小游戏条件",
-    "timing": "来源页面已列2026年11月1日至7日。按地区日历日期参考，不套用周常偏移，也不生成精确倒计时。"
+    "timing": "每月第一个周日开始，持续一周；本期按11月1日至7日覆盖月历。",
+    "scheduleRule": "first-sunday-week"
   }
 ];
 GAME_EVENTS.push(...WOW_US_CALENDAR_20261014);
 
-// User-selected cutoff conventions (Asia/Shanghai), applied to the matching
-// deadline categories only. Source/rotation verification remains independent.
+// Fixed deadlines for weekly resets and announced maintenance dates (UTC+8).
 const STANDARD_DEADLINE_HOURS={wowWeekly:'05:00',endfieldMaintenance:'06:00'};
 for(const e of GAME_EVENTS){
- const wow=e.game==='wow'&&e.referenceResetDate;
+ const wow=e.game==='wow'&&e.weeklyResetDate;
  const endfield=e.game==='endfield'&&e.boundaryDate;
  if(!wow&&!endfield)continue;
- const date=wow?e.referenceResetDate:e.boundaryDate;
+ const date=wow?e.weeklyResetDate:e.boundaryDate;
  const clock=wow?STANDARD_DEADLINE_HOURS.wowWeekly:STANDARD_DEADLINE_HOURS.endfieldMaintenance;
- e.cutoffBasis='user-standard';
+ e.cutoffBasis='fixed-schedule';
  e.cutoffChecked='2026-10-14';
  e.endAt=date+'T'+clock+':00+08:00';
  e.end=date;
@@ -767,10 +755,10 @@ for(const e of GAME_EVENTS){
  delete e.boundaryDate;
  e.deadlineLabel=date.slice(5).replace('-','/')+' '+clock;
  const opening=(e.dateLabel||e.start).split(' — ')[0];
- e.dateLabel=opening+' — '+date+' '+clock+(wow?' · 换算参考':' · 维护前');
- const convention=wow?'周常结束按用户指定统一采用北京时间05:00；活动轮换仍为美服日历换算参考。':'版本维护前截止按用户指定统一采用北京时间06:00。';
- e.timing=[(e.timing||'').replace('日历覆盖结束日用于提示重置；精确重置时刻待国服核对，因此不生成时分秒倒计时。',''),convention].filter(Boolean).join(' ');
+ e.dateLabel=opening+' — '+date+' '+clock+(wow?'':' · 维护前');
+ if(wow)e.timing='周常每周四北京时间05:00结束。';
+ else e.timing=[e.timing,'版本维护前活动截至'+date+' 06:00（北京时间）。'].filter(Boolean).join(' ');
  if(endfield){
-  for(const field of ['desc','detail'])if(e[field])e[field]=e[field].replaceAll('具体关服时刻待公告','维护开始时间统一按06:00计').replaceAll('维护时刻仍待官方公告','维护开始时间统一按06:00计').replaceAll('具体时刻待公告','维护开始时间统一按06:00计').replaceAll('维护时刻仍待公告','维护开始时间统一按06:00计');
+  for(const field of ['desc','detail'])if(e[field])e[field]=e[field].replaceAll('具体关服时刻待公告','维护开始时间为06:00').replaceAll('维护时刻仍待官方公告','维护开始时间为06:00').replaceAll('具体时刻待公告','维护开始时间为06:00').replaceAll('维护时刻仍待公告','维护开始时间为06:00');
  }
 }
