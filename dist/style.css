@@ -238,3 +238,36 @@ dialog { box-shadow: 0 16px 48px rgba(31, 41, 55, .2); }
   .deadline-table-wrap { box-shadow: none; }
   .deadline-table tbody tr { box-shadow: var(--shadow); }
 }
+
+/* One shared preference on the overview and every game calendar. */
+.external-activity-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--input);
+  color: var(--text);
+  font-size: .875rem;
+  font-weight: 400;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.external-activity-filter input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--gold);
+}
+.external-activity-filter span {
+  flex-basis: auto;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.external-activity-filter:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
