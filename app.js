@@ -43,7 +43,7 @@ function matchesDay(e,date){
  if(e.boundaryDate)return date>=e.start&&date<=e.boundaryDate;
  return dayStart<endTime(e)&&dayStart+86400000>startTime(e);
 }
-const visibleEvents=()=>GAME_EVENTS.filter(e=>!e.parentEvent&&!e.versionRoutine&&(includeExternal||!e.externalActivity));
+const visibleEvents=()=>GAME_EVENTS.filter(e=>!e.parentEvent&&!e.versionRoutine&&!e.excludedFromCalendar&&(includeExternal||!e.externalActivity));
 function scopedEvents(){return visibleEvents().filter(e=>(scope==='home'||e.game===scope)&&hasSchedule(e))}
 function dateText(e){return e.dateLabel||e.start+' — '+(e.end||'截止待公告')}
 function timingText(e){const rewards=GAME_EVENTS.filter(x=>x.parentEvent===e.id&&(includeExternal||!x.externalActivity));return [e.timing,rewards.length?'领奖、兑换提醒：'+rewards.map(x=>x.short+'截止 '+deadlineText(x)).join('；')+'。':''].filter(Boolean).join(' ')}

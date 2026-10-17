@@ -76,7 +76,7 @@ const GAMES=[
     "region": "国服",
     "checked": "2026-10-10",
     "source": "https://sr.mihoyo.com/news",
-    "note": "核对 TapTap 崩坏：星穹铁道官方账号的4.6版本说明、速览排期图和活动公告，收录限时玩法、签到、跃迁、双倍掉落、挑战轮换与网页活动。无名勋礼不列为活动。版本更新后开启的条目不推算精确开服时刻；常驻星际碰碰不设截止。领奖与兑换随主体活动说明。"
+    "note": "核对 TapTap 崩坏：星穹铁道官方账号的4.6版本说明、速览排期图和活动公告，收录限时玩法、签到、双倍掉落与网页活动。跃迁、挑战轮换和无名勋礼不列为活动。版本更新后开启的条目不推算精确开服时刻；常驻星际碰碰不设截止。领奖与兑换随主体活动说明。"
   }
 ];
 const GAME_EVENTS=EVENTS.map(e=>({...e,game:'wow',type:e.type||(e.milestone?'版本节点':'活动'),verification:e.verification||(e.confirmed?'国服公告核对':'国服排期待核实')}));
@@ -778,4 +778,11 @@ for(const e of GAME_EVENTS){
 }
 for(const e of GAME_EVENTS){
  if(e.parentEvent&&GAME_EVENTS.find(parent=>parent.id===e.parentEvent)?.externalActivity)e.externalActivity=true;
+}
+
+// Star Rail banners and recurring challenge cycles are outside this calendar.
+// Keep source history while excluding current, future and archived windows.
+const HSR_EXCLUDED_EVENT_TYPES=new Set(['跃迁','活动跃迁','角色跃迁','光锥跃迁','挑战轮换','挑战节点']);
+for(const e of GAME_EVENTS){
+ if(e.game==='hsr'&&HSR_EXCLUDED_EVENT_TYPES.has(e.type))e.excludedFromCalendar=true;
 }
