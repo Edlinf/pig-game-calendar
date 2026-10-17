@@ -762,3 +762,20 @@ for(const e of GAME_EVENTS){
   for(const field of ['desc','detail'])if(e[field])e[field]=e[field].replaceAll('具体关服时刻待公告','维护开始时间为06:00').replaceAll('维护时刻仍待官方公告','维护开始时间为06:00').replaceAll('具体时刻待公告','维护开始时间为06:00').replaceAll('维护时刻仍待公告','维护开始时间为06:00');
  }
 }
+
+// Participation location is explicit metadata, independent of rewards or links.
+// Legacy web campaigns include mixed in-game tasks with separate website entry.
+const EXTERNAL_ACTIVITY_IDS=new Set([
+ 'autumn','autumn-wishes','starlight-double','wow-adventure-handbook',
+ 'ff14-monthcard-gifts','ff14-monthcard-offer','ff14-monthcard-lottery',
+ 'ff14-pailifang','ff14-gold84-duty','ff14-gold84-draw',
+ 'ff14-fanfest3-register','ff14-fanfest3-keynote',
+ 'end-web-fusion','end-preview-gift','ark-sea-creation',
+ 'gs-anniversary-web','gs-miliastra-web','hsr-web-joy'
+]);
+for(const e of GAME_EVENTS){
+ if(typeof e.externalActivity!=='boolean')e.externalActivity=EXTERNAL_ACTIVITY_IDS.has(e.id);
+}
+for(const e of GAME_EVENTS){
+ if(e.parentEvent&&GAME_EVENTS.find(parent=>parent.id===e.parentEvent)?.externalActivity)e.externalActivity=true;
+}
