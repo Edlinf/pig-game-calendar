@@ -2796,6 +2796,94 @@ for(const patch of REVIEW_20261018.patches){
 }
 GAME_EVENTS.push(...REVIEW_20261018.additions);
 
+// Weekly review 2026-10-25. New records use only schedules read from the
+// named CN announcements; date-only rows deliberately do not gain a clock.
+const REVIEW_SOURCE_20261025={
+ ff14:'https://actff1.web.sdo.com/20241130_GoldTrial/',
+ arknights:'https://ak.hypergryph.com/news/0787',
+ fgo:'https://game.bilibili.com/fgo/news.html',
+ genshin:'https://ys.mihoyo.com/main/news/detail/167025'
+};
+function addReviewedEvent20261025(game,id,name,short,type,startValue,endValue,desc,detail,rewards,condition,extra={}){
+ const start=extra.start||startValue.slice(0,10);
+ const end=Object.prototype.hasOwnProperty.call(extra,'end')?extra.end:(endValue?endValue.slice(0,10):null);
+ const startAt=Object.prototype.hasOwnProperty.call(extra,'startAt')?extra.startAt:(startValue.includes('T')?startValue:null);
+ const endAt=Object.prototype.hasOwnProperty.call(extra,'endAt')?extra.endAt:(endValue&&endValue.includes('T')?endValue:null);
+ GAME_EVENTS.push({game,id,name,short,type,start,end,startAt,endAt,desc,detail,rewards,condition,confirmed:true,checked:'2026-10-25',source:REVIEW_SOURCE_20261025[game],verification:'国服官方公告',externalActivity:false,...extra});
+}
+
+const gold86={
+ source:'https://actff1.web.sdo.com/20241130_GoldTrial/',
+ official:'https://actff1.web.sdo.com/20241130_GoldTrial/',
+ verification:'国服官方第86期实时配置（GetCurrentActive）与规则核对',
+ externalActivity:true
+};
+addReviewedEvent20261025('ff14','ff14-gold86-duty','黄金的试炼 第86期 · 伊甸希望乐园 觉醒之章1','黄金试炼挑战','网页活动挑战','2026-10-23T13:00:00+08:00','2026-10-26T00:00:00+08:00','以等级同步方式通关伊甸希望乐园 觉醒之章1，取得本期网页登记资格。','指定副本完成期至10月25日23:59:59；完成后数据通常需要数分钟同步。副本通关不会自动领奖，仍须在10月29日13:00前到官方专题登记。','登记后可领取金碟币铜卡×2，并参与额外奖励抽取','正式账号，解锁80级副本伊甸希望乐园 觉醒之章1，并以等级同步方式完成',{...gold86,dateLabel:'10月23日 13:00 — 10月25日 23:59:59'});
+addReviewedEvent20261025('ff14','ff14-gold86-register','黄金的试炼 第86期 · 网页登记','黄金试炼登记','网页领奖','2026-10-23T13:00:00+08:00','2026-10-29T13:00:00+08:00','用已完成指定副本的角色在专题页面查询并登记。','每账号每期登记一次。登记截止是10月29日13:00，晚于副本挑战截止；额外奖励同日开始抽取。','金碟币铜卡×2及额外奖励抽取资格','已在本期挑战期内完成指定副本，并用对应角色登记',{...gold86,parentEvent:'ff14-gold86-duty',dateLabel:'10月23日 13:00 — 10月29日 13:00',deadlineLabel:'10/29 13:00'});
+addReviewedEvent20261025('ff14','ff14-gold86-draw','黄金的试炼 第86期 · 幸运奖励抽取','黄金试炼开奖','开奖节点','2026-10-29T13:00:00+08:00',null,'官方从本期成功登记的账号中抽取额外奖励。','开奖从10月29日13:00开始；虚拟奖励进入奖励仓库，实物获奖者须按专题规则及时填写收货信息。','黄金坐骑、宠物、实物及其他幸运奖励，以实际抽取结果为准','在第86期登记截止前成功登记',{...gold86,parentEvent:'ff14-gold86-duty',milestone:true,dateLabel:'10月29日 13:00 起抽取'});
+
+const arkThanks={source:'https://ak.hypergryph.com/news/0787',official:'https://ak.hypergryph.com/news/0787',verification:'国服官方2026感谢庆典公告正文与排期图核对'};
+addReviewedEvent20261025('arknights','ark-thanks-preview-signin','2026 感谢庆典 · 前瞻签到','感谢庆典预签到','签到','2026-10-24T21:30:00+08:00','2026-11-03T04:00:00+08:00','累计签到领取前瞻纪念奖励。','活动从感谢庆典前瞻直播当晚开放，累计签到七日；须在11月3日03:59前完成领取。','合成玉、养成材料等前瞻签到奖励','通关主线1-10后，在活动页面累计签到',{...arkThanks,dateLabel:'10月24日 21:30 — 11月3日 03:59'});
+addReviewedEvent20261025('arknights','ark-evolution-museum','视相博物馆：演化','视相博物馆','限时活动','2026-10-24T21:30:00+08:00','2026-11-07T04:00:00+08:00','完成博物馆任务与收集，兑换限时奖励。','活动至11月7日03:59；兑换商店另开放至11月10日03:59，兑换截止作为主体提醒保留。','活动家具、养成材料及公告所列奖励','通关主线1-10',{...arkThanks,dateLabel:'10月24日 21:30 — 11月7日 03:59',timing:'活动至11月7日03:59；兑换商店至11月10日03:59。'});
+addReviewedEvent20261025('arknights','ark-evolution-museum-exchange','视相博物馆：演化 · 奖励兑换','博物馆兑换','商店兑换','2026-10-24T21:30:00+08:00','2026-11-10T04:00:00+08:00','使用活动代币兑换尚未领取的奖励。','玩法已于11月7日03:59结束；这里只记录最后兑换期。','活动商店剩余奖励','持有未使用的活动代币',{...arkThanks,parentEvent:'ark-evolution-museum',dateLabel:'10月24日 21:30 — 11月10日 03:59'});
+addReviewedEvent20261025('arknights','ark-frozen-fire-web','冻土与火种','冻土与火种','网页活动','2026-10-24T20:00:00+08:00','2026-11-24T04:00:00+08:00','参与官方网页互动，解锁纪念内容与抽奖机会。','活动页开放至11月24日03:59；实物奖资格、登记与发放按网页规则执行。','网页奖励及实物周边抽选机会','按官方网页要求登录并完成互动任务',{source:'https://ak.hypergryph.com/news/7353',official:'https://ak.hypergryph.com/news/7353',verification:'国服官方网页活动公告',externalActivity:true,dateLabel:'10月24日 20:00 — 11月24日 03:59'});
+addReviewedEvent20261025('arknights','ark-time-forward','时间啊，向前！','时间啊向前','SideStory','2026-11-01T12:00:00+08:00','2026-11-22T04:00:00+08:00','推进全新SideStory关卡，完成任务并收集活动代币。','首段11月1日12:00开放，第二段11月8日16:00开放，第三段11月15日16:00开放；全部关卡11月22日03:59关闭。活动商店另至11月29日03:59。','活动干员国度、主题家具及养成材料','通关主线1-10',{...arkThanks,dateLabel:'11月1日 12:00 — 11月22日 03:59',timing:'关卡分三段开放：11月1日12:00、11月8日16:00、11月15日16:00；商店至11月29日03:59。'});
+addReviewedEvent20261025('arknights','ark-time-forward-exchange','时间啊，向前！ · 商店兑换','时间啊向前兑换','商店兑换','2026-11-01T12:00:00+08:00','2026-11-29T04:00:00+08:00','用活动代币兑换剩余奖励。','活动关卡11月22日03:59关闭；这里只记录活动商店的延长兑换期。','活动商店剩余奖励','持有未使用的活动代币',{...arkThanks,parentEvent:'ark-time-forward',dateLabel:'11月1日 12:00 — 11月29日 03:59'});
+addReviewedEvent20261025('arknights','ark-snow-to-fire','将雪投火 · 限定寻访','将雪投火','限定寻访','2026-11-01T12:00:00+08:00','2026-11-15T04:00:00+08:00','参与感谢庆典限定寻访。','寻访至11月15日03:59；寻访数据契约交换所延长至11月18日03:59。概率提升与保底细则以寻访详情为准。','限定干员及概率提升干员，以官方寻访详情为准','解锁寻访功能，使用合成玉、源石或对应寻访凭证',{...arkThanks,dateLabel:'11月1日 12:00 — 11月15日 03:59',timing:'寻访至11月15日03:59；数据契约交换至11月18日03:59。'});
+addReviewedEvent20261025('arknights','ark-snow-to-fire-exchange','将雪投火 · 数据契约交换','限定寻访交换','寻访兑换','2026-11-01T12:00:00+08:00','2026-11-18T04:00:00+08:00','使用本期寻访数据契约完成最后交换。','限定寻访11月15日03:59关闭，交换所继续开放三日。','本期交换所可选干员与材料','持有本期寻访数据契约',{...arkThanks,parentEvent:'ark-snow-to-fire',dateLabel:'11月1日 12:00 — 11月18日 03:59'});
+addReviewedEvent20261025('arknights','ark-thanks-ten-pull','感谢庆典 · 限定十连寻访凭证','限定十连赠礼','登录福利','2026-11-01T12:00:00+08:00','2026-11-15T04:00:00+08:00','活动期间登录领取一张限定十连寻访凭证。','凭证仅用于本期限定寻访，并于11月15日03:59随寻访结束失效，领取后请及时使用。','限定十连寻访凭证1张','活动期间登录并完成领取',{...arkThanks,dateLabel:'11月1日 12:00 — 11月15日 03:59'});
+addReviewedEvent20261025('arknights','ark-thanks-ten-day-signin','感谢庆典 · 十日签到','感谢庆典签到','签到','2026-11-01T12:00:00+08:00','2026-11-15T04:00:00+08:00','累计签到十日领取庆典奖励。','一天最多记录一次签到，须在活动关闭前完成所需天数并领取。','合成玉、应急理智顶液及养成材料等','活动期间累计签到十日',{...arkThanks,dateLabel:'11月1日 12:00 — 11月15日 03:59'});
+addReviewedEvent20261025('arknights','ark-thanks-wish-wall','感谢庆典 · 每日赠送寻访','庆典每日寻访','每日福利','2026-11-01T12:00:00+08:00','2026-11-15T04:00:00+08:00','在限定寻访页面使用每日免费寻访机会。','免费机会每日刷新且不可累积，最后一期于11月15日03:59结束。','每日1次限定寻访机会','解锁寻访功能，活动期间每日进入限定寻访页面',{...arkThanks,dateLabel:'11月1日 12:00 — 11月15日 03:59'});
+addReviewedEvent20261025('arknights','ark-special-recruitment','感谢庆典 · 特别招募','特别招募','公开招募','2026-11-01T12:00:00+08:00','2026-12-02T04:00:00+08:00','在特别招募窗口使用活动提供的招募机会。','特别招募开放至12月2日03:59；具体可选范围与次数以游戏内规则为准。','特别招募机会及对应干员','解锁公开招募，并按活动规则参与',{...arkThanks,dateLabel:'11月1日 12:00 — 12月2日 03:59'});
+addReviewedEvent20261025('arknights','ark-thanks-outfits','感谢庆典 · 新装与复刻时装','感谢庆典时装','限时商城','2026-11-01T12:00:00+08:00','2026-11-29T04:00:00+08:00','在时装商店购买本期新装与复刻时装。','不同系列的具体款式和源石价格以官方公告及游戏内商店为准；本条只记录统一售卖窗口。','本期新装及复刻时装','解锁采购中心，使用至纯源石购买',{...arkThanks,dateLabel:'11月1日 12:00 — 11月29日 03:59'});
+addReviewedEvent20261025('arknights','ark-garrison-headhunt','卫戍寻访','卫戍寻访','寻访','2026-11-08T16:00:00+08:00','2026-12-02T04:00:00+08:00','参与卫戍主题寻访。','寻访于11月8日16:00开放，12月2日03:59结束；概率与保底按本期寻访详情执行。','本期概率提升干员','解锁寻访功能，使用合成玉、源石或寻访凭证',{...arkThanks,dateLabel:'11月8日 16:00 — 12月2日 03:59'});
+addReviewedEvent20261025('arknights','ark-supply-signin','感谢庆典 · 补给签到','补给签到','签到','2026-11-12T04:00:00+08:00','2026-11-22T04:00:00+08:00','活动期间完成补给签到，领取养成资源。','签到窗口至11月22日03:59，遗漏天数是否可补以游戏内界面为准。','理智补给及养成材料','活动期间登录并完成签到',{...arkThanks,dateLabel:'11月12日 04:00 — 11月22日 03:59'});
+addReviewedEvent20261025('arknights','ark-kernel-selection-nov','中坚甄选 · 感谢庆典期','中坚甄选','中坚寻访','2026-11-12T04:00:00+08:00','2026-11-26T04:00:00+08:00','在中坚甄选中按公告范围选择概率提升干员。','本期开放至11月26日03:59；可选范围、概率和保底规则以中坚甄选界面为准。','自选概率提升的中坚干员','解锁中坚寻访并按规则选择概率提升',{...arkThanks,dateLabel:'11月12日 04:00 — 11月26日 03:59'});
+addReviewedEvent20261025('arknights','ark-joint-operation-nov','联合行动 · 感谢庆典期','联合行动','寻访','2026-11-15T16:00:00+08:00','2026-11-29T04:00:00+08:00','参与本期联合行动寻访。','本期只会出现公告指定范围内的干员；具体名单、概率与保底规则以寻访详情为准。','联合行动指定干员','解锁寻访功能，使用合成玉、源石或寻访凭证',{...arkThanks,dateLabel:'11月15日 16:00 — 11月29日 03:59'});
+
+const fgoHalloween={source:'https://game.bilibili.com/fgo/news.html',official:'https://game.bilibili.com/fgo/news.html',crossSource:'https://fgo.wiki/w/%E7%BB%88%E7%BB%93%C2%B7%E4%B8%87%E5%9C%A3%E8%8A%822025_%EF%BD%9E%E4%BA%8E%E5%8D%97%E7%93%9C%E6%98%9F%E9%97%AA%E8%80%80%E7%9A%84%E6%AD%8C%E5%A7%AC%EF%BD%9E',verification:'国服官方公告；Mooncell国服北京时间交叉核对'};
+addReviewedEvent20261025('fgo','fgo-final-halloween-2026','终结·万圣节2026 ～于南瓜星闪耀的歌姬～','终结万圣节2026','限时活动','2026-10-22T19:00:00+08:00','2026-11-12T14:00:00+08:00','推进万圣节主线与自由关卡，收集活动道具并获得活动从者。','活动关卡至11月12日13:59，活动商店另至11月19日13:59。活动从者加入、关卡开放节奏与高难本条件以官方公告及游戏内为准。','活动从者终结的伊丽莎白、圣晶石、传承结晶及活动商店奖励','通关特异点F 燃烧污染都市 冬木',{...fgoHalloween,dateLabel:'10月22日 19:00 — 11月12日 13:59',timing:'活动关卡至11月12日13:59；商店兑换至11月19日13:59。'});
+addReviewedEvent20261025('fgo','fgo-final-halloween-shop','终结·万圣节2026 · 活动商店兑换','万圣节商店兑换','商店兑换','2026-10-22T19:00:00+08:00','2026-11-19T14:00:00+08:00','用活动道具完成最后兑换。','活动关卡11月12日13:59关闭；这里只记录商店延长兑换期。','活动商店剩余奖励','持有未使用的活动道具',{...fgoHalloween,parentEvent:'fgo-final-halloween-2026',dateLabel:'10月22日 19:00 — 11月19日 13:59'});
+addReviewedEvent20261025('fgo','fgo-final-halloween-elizabeth-summon','终结·万圣节2026 · 伊丽莎白·巴托里推荐召唤','伊丽莎白推荐召唤','推荐召唤','2026-10-22T19:00:00+08:00','2026-11-13T14:00:00+08:00','★5伊丽莎白·巴托里及活动概念礼装概率提升。','本召唤独立计算保底；详细概率、从者币与活动礼装加成以召唤详情为准。','概率提升：★5伊丽莎白·巴托里及活动概念礼装','解锁召唤功能，持有所需圣晶石或呼符',{...fgoHalloween,crossSource:'https://fgo.wiki/w/%E7%BB%88%E7%BB%93%C2%B7%E4%B8%87%E5%9C%A3%E8%8A%822025_%E2%98%855%28SSR%29%E4%BC%8A%E4%B8%BD%E8%8E%8E%E7%99%BD%C2%B7%E5%B7%B4%E6%89%98%E9%87%8C%E6%8E%A8%E8%8D%90%E5%8F%AC%E5%94%A4',dateLabel:'10月22日 19:00 — 11月13日 13:59'});
+addReviewedEvent20261025('fgo','fgo-final-halloween-summon2','终结·万圣节2026 · 推荐召唤2','万圣节推荐召唤2','推荐召唤','2026-10-24T19:00:00+08:00','2026-11-12T14:00:00+08:00','★5雅克·德·莫莱等公告所列从者与活动概念礼装概率提升。','各推荐时段和从者组合不同；以游戏内召唤详情为准，不将其他万圣节卡池的结束时间套用到本池。','概率提升从者与活动概念礼装','解锁召唤功能，持有所需圣晶石或呼符',{...fgoHalloween,crossSource:'https://fgo.wiki/w/%E7%BB%88%E7%BB%93%C2%B7%E4%B8%87%E5%9C%A3%E8%8A%822025%E6%8E%A8%E8%8D%90%E5%8F%AC%E5%94%A42',dateLabel:'10月24日 19:00 — 11月12日 13:59'});
+
+const genshin72={source:'https://ys.mihoyo.com/main/news/detail/167025',official:'https://ys.mihoyo.com/main/news/detail/167025',crossSource:'https://www.miyoushe.com/ys/article/79085774',verification:'国服官方7.2前瞻长图实际读取；仅列图中日期'};
+addReviewedEvent20261025('genshin','gs-72-update','7.2版本「坏灭肇始之时」','7.2版本更新','版本节点','2026-11-04',null,'7.2版本于11月4日更新。','官方前瞻仅公布更新日期，维护开始、开服和补偿时刻待版本更新公告，不生成精确倒计时。','版本新内容，具体奖励与补偿待更新公告','更新客户端后按主线与玩法各自条件参与',{...genshin72,milestone:true,startPrecision:'day',datePrecision:'day',dateLabel:'11月4日版本更新 · 时刻待公告'});
+addReviewedEvent20261025('genshin','gs-72-main-event','全域镇卫·逆捍谬罚','逆捍谬罚','版本主题活动','2026-11-04','2026-12-17','参与7.2版本主题活动，推进各阶段挑战与剧情。','官方前瞻排期图只列11月4日至12月16日，未给固定开闭时刻；按完整日期显示，不生成秒级倒计时。阶段解锁与参与条件待单项公告。','原石、培养材料及活动奖励，详见后续单项公告','参与等级与前置任务待单项公告核对',{...genshin72,startPrecision:'version',datePrecision:'day',lastDay:'2026-12-16',dateLabel:'11月4日版本更新后 — 12月16日 · 仅列日期'});
+addReviewedEvent20261025('genshin','gs-72-pressure-cubes','压力方块粉碎计划','压力方块粉碎','限时活动','2026-11-20','2026-12-01','完成压力方块主题挑战。','官方排期图列11月20日至30日，未给时刻；玩法规则与参与条件待单项公告。','原石及培养材料，详见后续公告','具体参与条件待单项公告核对',{...genshin72,datePrecision:'day',lastDay:'2026-11-30',dateLabel:'11月20日 — 11月30日 · 仅列日期'});
+addReviewedEvent20261025('genshin','gs-72-photo-record','厉影定格录','厉影定格录','限时活动','2026-11-27','2026-12-08','参与摄影记录主题活动。','官方排期图列11月27日至12月7日，未给时刻；玩法规则与参与条件待单项公告。','原石及培养材料，详见后续公告','具体参与条件待单项公告核对',{...genshin72,datePrecision:'day',lastDay:'2026-12-07',dateLabel:'11月27日 — 12月7日 · 仅列日期'});
+addReviewedEvent20261025('genshin','gs-72-ley-line-overflow','地脉移涌','地脉移涌','双倍掉落','2026-12-07','2026-12-15','消耗原粹树脂领取地脉衍出·启示之花或藏金之花奖励时获得双倍产出。','官方排期图列12月7日至14日，未给刷新时刻；每日次数与细则待单项公告。','地脉衍出双倍奖励','解锁对应地脉衍出并消耗原粹树脂',{...genshin72,datePrecision:'day',lastDay:'2026-12-14',dateLabel:'12月7日 — 12月14日 · 仅列日期'});
+addReviewedEvent20261025('genshin','gs-training-sixth','砺行修远 · 第六期','砺行修远第六期','长期养成活动','2026-11-02','2027-01-26','完成砺行修远第六期目标，获取角色养成与命星相关奖励。','官方前瞻排期图列11月2日至2027年1月25日，未给固定开闭时刻；角色范围、阶段任务与资格以活动界面和后续公告为准。','砺行修远第六期奖励','满足砺行修远活动资格并完成对应目标',{...genshin72,datePrecision:'day',lastDay:'2027-01-25',dateLabel:'11月2日 — 2027年1月25日 · 仅列日期'});
+addReviewedEvent20261025('genshin','gs-72-miliastra-frostfeather','千星奇域 · 霜庭雪翎装扮颂愿','霜庭雪翎颂愿','装扮颂愿','2026-11-11','2026-12-16','通过7.2版本千星奇域活动颂愿获取限定传说装扮“霜庭雪翎”。','官方前瞻排期图列11月11日至12月15日，未给固定时刻；颂愿规则、同池装扮与升炼效果以后续单项公告为准。','限定传说装扮“霜庭雪翎”及同池装扮','唤醒千星奇域奇偶，使用对应颂愿道具',{...genshin72,datePrecision:'day',lastDay:'2026-12-15',dateLabel:'11月11日 — 12月15日 · 仅列日期'});
+
+const review20261025Patches={
+ 'ff14-fallguys':{checked:'2026-10-25'},
+ 'ff14-halloween':{checked:'2026-10-25'},
+ 'gs-blessing-overflow':{checked:'2026-10-25',source:'https://ys.mihoyo.com/main/news/detail/167040',official:'https://ys.mihoyo.com/main/news/detail/167040',verification:'国服官方单项公告与排期图核对'},
+ 'fgo-halloween2026-opening':{checked:'2026-10-25',parentEvent:'fgo-final-halloween-2026',name:'终结·万圣节2026 · 开放节点',short:'万圣节开放节点',desc:'主体活动已于10月22日19:00开放。',detail:'主体完整排期已核对，活动关卡至11月12日13:59，商店至11月19日13:59；本开放节点关联主体，不单独展示。',dateLabel:'10月22日 19:00开放',startAt:'2026-10-22T19:00:00+08:00',startPrecision:'time',verification:'国服官方公告；Mooncell国服北京时间交叉核对'}
+};
+for(const [id,fields] of Object.entries(review20261025Patches)){
+ const event=GAME_EVENTS.find(e=>e.id===id);
+ if(!event)throw new Error('Missing 2026-10-25 reviewed event: '+id);
+ Object.assign(event,fields);
+}
+for(const e of GAME_EVENTS){
+ if(e.game==='wow'&&e.usCalendar){e.checked='2026-10-25';e.usCalendar={...e.usCalendar,checked:'2026-10-25'};}
+ if(e.game==='wow'&&e.scheduleRule==='first-sunday-week')e.checked='2026-10-25';
+ if(e.game==='endfield'&&e.source==='https://endfield.hypergryph.com/news/6094')e.checked='2026-10-25';
+}
+for(const update of [
+ ['wow','10月25日实际读取WoWDB LIVE美服事件日历，复核既有11个周常窗口、洛杉矶夏令时记录及国服周四05:00截止；德拉诺时光漫游10月29日开始，跨11月1日夏令时切换，换算记录未被统一加日。暗月11月1日至7日仍按每月首个周日规则确定；万圣节继续保留美服日期参考。国服12.1.5团本与攻略说明保留，正式服各难度首领技能差异和本期时光副本池仍待进一步实证。'],
+ ['ff14','10月25日复核国服官方近期活动与专题，并直接读取黄金的试炼第86期实时配置：伊甸希望乐园觉醒之章1挑战至10月25日23:59:59，网页登记至10月29日13:00。糖豆人联动至10月27日22:59，守护天节至11月2日22:59；莫古后续版本节点仍未公布准确日期。'],
+ ['endfield','10月25日重新读取丹青渡国服更新说明，现有拍照、危机准备、演武、网页影院、寻访/申领及后续窗口与官方排期一致。下一版本维护日期仍未公布，不推算烟火生缘、明河寻访/签到和危机合约关闭日；已公布维护日的窗口继续使用北京时间06:00。'],
+ ['arknights','10月25日读取国服2026感谢庆典完整公告与官方图片，新增前瞻签到、视相博物馆、冻土与火种网页活动、时间啊向前SideStory、限定寻访、登录福利、特别招募、时装及后续寻访/签到窗口；关卡、商店、数据契约和凭证期限分别记录并关联主体。卫戍协议赛季本体属于例行赛季，不纳入活动日历。'],
+ ['fgo','10月25日核对国服终结·万圣节2026主体、商店与两期推荐召唤：活动10月22日19:00至11月12日13:59，商店至11月19日13:59；伊丽莎白召唤至11月13日13:59，推荐召唤2于10月24日19:00开放至11月12日13:59。官方动态页与Mooncell标注的国服北京时间交叉核对；预估活动未收录。'],
+ ['genshin','10月25日实际读取国服7.2前瞻长图：版本11月4日更新，新增全域镇卫、压力方块、厉影定格录、地脉移涌、砺行修远第六期及千星奇域霜庭雪翎排期。图中仅列日期的项目均按日期显示，不编造时刻；祈愿分期角色虽已公布，但完整起止窗口和第二项千星奇域单项细则待正式公告，未生成倒计时。']
+]){
+ const game=GAMES.find(g=>g.id===update[0]);
+ game.checked='2026-10-25';game.note=update[1];
+}
+
 // Fixed deadlines for weekly resets and announced maintenance dates (UTC+8).
 const STANDARD_DEADLINE_HOURS={wowWeekly:'05:00',endfieldMaintenance:'06:00'};
 for(const e of GAME_EVENTS){
