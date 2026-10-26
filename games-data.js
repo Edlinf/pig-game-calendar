@@ -2932,3 +2932,48 @@ const HSR_EXCLUDED_EVENT_TYPES=new Set(['跃迁','活动跃迁','角色跃迁','
 for(const e of GAME_EVENTS){
  if(e.game==='hsr'&&HSR_EXCLUDED_EVENT_TYPES.has(e.type))e.excludedFromCalendar=true;
 }
+
+// Sign-in and login-only reward campaigns are excluded for every game.
+// Mixed campaigns keep their independent tasks, bonuses and gameplay.
+const SIGNIN_EVENT_TYPES=new Set(['签到','签到活动','网页签到','登录签到','累计登录','登录奖励','登录福利','登录活动']);
+const NON_SIGNIN_CAMPAIGN_UPDATES={
+ 'winds':{
+  desc:'10–89级经验 +20%，声望 +50%（两项新声望除外）。',
+  detail:'活动在每周服务器重启时开启、结束。祖尔加拉的部队与托卡船长的至交血誓不享受声望加成。90级以下通过任务与拾取获得神秘背包，每日首个为完好背包。经验药水可再加10%，战团绑定；属性与元素药水不能用于团本、大秘境及评级PvP。'
+ },
+ 'end-npu-gift':{
+  type:'限时任务',desc:'参与各类玩法，领取干员与武器馈赠。',condition:'完成对应玩法任务'
+ },
+ 'fgo-3300-downloads':{
+  desc:'利用纪念活动期间的限时养成与AP消耗优惠。',
+  detail:'种火、幕间、强化关卡及其他养成优惠具体窗口以国服说明为准。',
+  rewards:'养成与AP消耗优惠',condition:'各类关卡的具体资格以国服活动页面与玩法解锁条件为准',
+  timing:'纪念活动总窗口10月8日维护后—10月22日13:59。永久新增职阶星图任务、风暴罐月度交换不会随本期活动结束消失。'
+ },
+ 'hsr-pet-warp':{
+  desc:'使用潮玩礼券参与幻宠抽取。',detail:'抽取奖励与礼券使用规则见游戏内。',rewards:'猫猫狸、奇美拉等幻宠'
+ },
+ 'fgo-assassin-celebration':{
+  type:'限时任务',
+  detail:'冠位战本体常驻；限时福利至10月22日13:59。选定1骑Assassin冠位可得3圣晶石，通关任务最多18个占星茶壶；首批任务10月15日维护后—16日23:59，17、18、19、20日各当天完成，最后批次21日00:00—22日13:59，各批最多3次。任务领取至10月29日13:59，占星茶壶使用至11月30日23:59。注意自动使用风暴罐设为ON时，0消耗期间仍会使用风暴罐以获得星光之砂。永久追加任务不在本期结束时消失。',
+  rewards:'3圣晶石、最多18占星茶壶；冠位钻研战风暴罐0消耗',
+  condition:'冠位战须通关奏章序幕 Ordeal Call 0；任务能否完成取决于主线进度及冠位选定资格。',
+  timing:'限时挑战及任务至10月22日13:59；已完成任务领取至10月29日13:59；占星茶壶至11月30日23:59使用。永久关卡、特殊任务继续开放。'
+ },
+ 'fgo-halloween2026-prelude':{
+  desc:'提前强化活动加成从者，利用限时牵绊和养成优惠。',
+  detail:'活动总期10月17日19:00—31日13:59。对象从者牵绊获得量+20%只到10月22日13:59，冠位戴冠战不在对象内。10月22日维护后—31日13:59对象从者强化大成功/极大成功率2倍，指定强化关卡和幕间AP减半。魔术礼装「万圣节王室成员」10月22日维护后常驻追加，通关第2部序章的指定章节可免费交换，不设本期交换期限。万圣节主体仅已公布10月22日开幕，未推算结束日期。',
+  rewards:'指定从者牵绊及养成优惠',condition:'加成按官方名单与关卡解锁条件',
+  timing:'牵绊+20%至10月22日13:59；强化优惠为10月22日维护后—31日13:59。'
+ }
+};
+for(const e of GAME_EVENTS){
+ if(NON_SIGNIN_CAMPAIGN_UPDATES[e.id])Object.assign(e,NON_SIGNIN_CAMPAIGN_UPDATES[e.id]);
+ if(e.signInActivity===true||SIGNIN_EVENT_TYPES.has(e.type)){
+  e.signInActivity=true;
+  e.excludedFromCalendar=true;
+ }
+}
+for(const e of GAME_EVENTS){
+ if(e.parentEvent&&GAME_EVENTS.find(parent=>parent.id===e.parentEvent)?.excludedFromCalendar)e.excludedFromCalendar=true;
+}
