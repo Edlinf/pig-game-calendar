@@ -3009,6 +3009,15 @@ for(const e of GAME_EVENTS){
  if(e.game==='hsr'&&HSR_EXCLUDED_EVENT_TYPES.has(e.type))e.excludedFromCalendar=true;
 }
 
+// Operator trials are excluded across current, future and archived windows.
+const OPERATOR_TRIAL_EVENT_TYPES=new Set(['干员试用','干员试用活动','干员试用演练']);
+for(const e of GAME_EVENTS){
+ if(e.operatorTrialActivity===true||OPERATOR_TRIAL_EVENT_TYPES.has(e.type)){
+  e.operatorTrialActivity=true;
+  e.excludedFromCalendar=true;
+ }
+}
+
 // Sign-in and login-only reward campaigns are excluded for every game.
 // Mixed campaigns keep their independent tasks, bonuses and gameplay.
 const SIGNIN_EVENT_TYPES=new Set(['签到','签到活动','网页签到','登录签到','累计登录','登录奖励','登录福利','登录活动']);
