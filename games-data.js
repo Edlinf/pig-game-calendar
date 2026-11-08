@@ -2960,6 +2960,145 @@ for(const update of [
  game.checked='2026-11-01';game.note=update[1];
 }
 
+// Weekly review 2026-11-08. Times below were read from the named CN
+// announcements. Claim, exchange and registration deadlines remain attached
+// to their parent event and therefore do not inflate calendar statistics.
+const REVIEW_CHECKED_20261108='2026-11-08';
+const review20261108Patches={
+ 'end-inn':{
+  checked:REVIEW_CHECKED_20261108,
+  end:'2026-11-25',endAt:'2026-11-25T06:00:00+08:00',
+  source:'https://www.taptap.cn/moment/867108949059293273',official:'https://endfield.hypergryph.com/news',
+  verification:'终末地国服官方入驻账号11月5日调期公告',cutoffBasis:'fixed-schedule',cutoffChecked:REVIEW_CHECKED_20261108,
+  dateLabel:'10月15日版本更新后 — 11月25日 06:00 · 维护前',deadlineLabel:'11/25 06:00',
+  detail:'10月22日04:00更新活动内容。官方11月5日调期公告确认限时经营任务及其奖励延长至11月25日06:00版本维护前；结束后仍可经营客栈并获取经营里程阶段奖励，勿混同。',
+  timing:'限时经营任务及奖励至11月25日06:00维护前；常驻经营里程不随之关闭。'
+ },
+ 'end-cc-blue-shop':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-12-02',endAt:'2026-12-02T04:00:00+08:00',
+  source:'https://www.taptap.cn/moment/867108949059293273',official:'https://endfield.hypergryph.com/news',
+  verification:'终末地国服官方入驻账号11月5日调期公告',dateLabel:'11月5日 12:00 — 12月2日 04:00',deadlineLabel:'12/02 04:00',
+  detail:'官方调期公告确认机密圣所兑换延长至12月2日04:00；关联主体活动，仅在主体详情提醒，不单独显示或计数。'
+ },
+ 'end-sanity-nov':{
+  checked:REVIEW_CHECKED_20261108,start:'2026-11-18',startAt:'2026-11-18T04:00:00+08:00',end:'2026-11-25',endAt:'2026-11-25T04:00:00+08:00',
+  source:'https://www.taptap.cn/moment/867108949059293273',official:'https://endfield.hypergryph.com/news',
+  verification:'终末地国服官方入驻账号11月5日调期公告',dateLabel:'11月18日 04:00 — 11月25日 04:00',
+  detail:'官方调期公告确认独立固定窗口为11月18日04:00至11月25日04:00；不把该结束时间视为版本维护时刻。'
+ },
+ 'end-minghe-banner':{
+  checked:REVIEW_CHECKED_20261108,source:'https://endfield.hypergryph.com/news/7204',official:'https://endfield.hypergryph.com/news/7204',
+  verification:'终末地国服官方明河特许寻访公告',
+  detail:'官方仍只写版本更新维护前结束；下次维护日期尚未公告，不猜测日期或时刻。30次寻访节点赠当期星河共我寻访凭证×10；60次节点赠星河情报凭证，可在下期同类寻访兑换10次寻访；累计240次可领取明河信物×1。',
+  rewards:'概率提升：6星干员明河；30/60/240次节点奖励',condition:'完成第一章进程Ⅰ主线任务「基地解围」，并解锁干员寻访',dateLabel:'11月5日 12:00 — 下次版本维护前 · 日期待公告'
+ },
+ 'ark-garrison-headhunt':{
+  checked:REVIEW_CHECKED_20261108,
+  detail:'寻访于11月8日16:00开放，12月2日03:59结束。6星仅出现Mon3tr、烛煌、真言、逻各斯、乌尔比安、引星棘刺、锏、玛恩纳、忍冬、白铁；概率与保底按本期寻访详情执行。',
+  rewards:'本期卫戍范围内的6星、5星及4星干员',verification:'国服官方2026感谢庆典第二部分公告与排期图核对'
+ },
+ 'fgo-billion-download-broadcast':{
+  checked:REVIEW_CHECKED_20261108,start:'2026-11-07',startAt:null,end:'2026-11-08',endAt:null,
+  datePrecision:'day',lastDay:'2026-11-07',dateLabel:'11月7日 19:00开播 · 已结束',
+  detail:'国服认证官方微博确认11月7日19:00开播。这里只保留直播发生日，不推定实际结束时刻；直播后公布的纪念活动与推荐召唤已按正式公告另行收录。'
+ },
+ 'gs-72-phase1-character-wishes':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-11-24',endAt:'2026-11-24T18:00:00+08:00',
+  source:'https://www.taptap.cn/moment/866643843888448091',official:'https://www.taptap.cn/moment/866643843888448091',
+  verification:'TapTap原神官方入驻账号首期活动祈愿公告与配图核对',dateLabel:'11月4日版本更新后 — 11月24日 17:59',deadlineLabel:'11/24 17:59',
+  detail:'活动祈愿于7.2版本更新后开放，11月24日17:59结束。米提亚与芙宁娜分别在同期角色活动祈愿中概率提升；4星角色范围以公告配图为准。'
+ },
+ 'gs-72-phase1-weapon-wish':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-11-24',endAt:'2026-11-24T18:00:00+08:00',
+  source:'https://www.taptap.cn/moment/866643843888448091',official:'https://www.taptap.cn/moment/866643843888448091',
+  verification:'TapTap原神官方入驻账号首期活动祈愿公告与配图核对',dateLabel:'11月4日版本更新后 — 11月24日 17:59',deadlineLabel:'11/24 17:59',
+  detail:'神铸赋形于7.2版本更新后开放，11月24日17:59结束；5星法器秘星典谕、单手剑静水流涌之辉及公告所列4星武器概率提升。',
+  rewards:'概率提升：秘星典谕、静水流涌之辉及公告所列4星武器'
+ },
+ 'gs-72-miliastra-harmony':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-12-15',endAt:'2026-12-15T15:00:00+08:00',
+  source:'https://www.taptap.cn/moment/866642436036755642',official:'https://www.taptap.cn/moment/866642436036755642',
+  verification:'TapTap原神官方入驻账号千星奇域装扮公告与配图核对',dateLabel:'11月4日版本更新后 — 12月15日 14:59',deadlineLabel:'12/15 14:59',
+  detail:'活动颂愿于7.2版本更新后开放，12月15日14:59结束；限定传说装扮殊律覆音及藏梦绒偶、浮想茶歇、嘉卉研序进入活动颂愿。穿戴新套装或试行斗篷游玩人气奇域关卡还可获得60原石。'
+ },
+ 'gs-72-miliastra-appreciation':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-12-16',endAt:'2026-12-16T06:00:00+08:00',
+  source:'https://www.taptap.cn/moment/866643163261961149',official:'https://www.taptap.cn/moment/866643163261961149',
+  verification:'TapTap原神官方入驻账号绮衣珍赏公告与配图核对',dateLabel:'11月4日版本更新后 — 12月16日 05:59',deadlineLabel:'12/16 05:59',
+  detail:'活动于7.2版本更新后开放，12月16日05:59结束。完成珍赏任务获得珍赏见闻与重现晶簇；每周可获奖励次数有上限，首次领取套装部件后不能再更改自选套装。'
+ },
+ 'gs-72-miliastra-frostfeather':{
+  checked:REVIEW_CHECKED_20261108,start:'2026-11-04',startAt:null,startPrecision:'version',end:'2026-12-15',endAt:'2026-12-15T15:00:00+08:00',
+  source:'https://www.taptap.cn/moment/866642800031040681',official:'https://www.taptap.cn/moment/866642800031040681',crossSource:null,
+  verification:'TapTap原神官方入驻账号雪阵霜庭装扮公告与配图核对',dateLabel:'11月4日版本更新后 — 12月15日 14:59',deadlineLabel:'12/15 14:59',
+  detail:'活动颂愿-2于7.2版本更新后开放，12月15日14:59结束；限定传说装扮霜庭雪翎及暖冬欢歌、荒远山裔、疗愈心意进入活动颂愿-2。'
+ },
+ 'gs-72-miliastra-creation-contest':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-12-08',endAt:'2026-12-08T12:00:00+08:00',
+  source:'https://www.taptap.cn/moment/866641461968375409',official:'https://www.taptap.cn/moment/866641461968375409',
+  verification:'TapTap原神官方入驻账号千星创作赛规则与配图核对',dateLabel:'11月4日版本更新后 — 12月8日 11:59:59',deadlineLabel:'12/08 11:59:59',
+  detail:'制作投稿至12月8日11:59:59，评审期为12月8日12:00至2027年1月14日15:59:59，获奖公示为1月14日16:00至20日23:59:59。参赛需在游戏内报名并发布奇域，投稿后不能更换。',
+  rewards:'一号创作票券、原石及官方宣传资源；具体档位以双赛道规则为准',condition:'解锁千星奇域创作功能，在游戏内赛事报名界面选择赛道并发布原创奇域'
+ }
+};
+for(const [id,fields] of Object.entries(review20261108Patches)){
+ const event=GAME_EVENTS.find(e=>e.id===id);
+ if(!event)throw new Error('Missing 2026-11-08 reviewed event: '+id);
+ Object.assign(event,fields);
+ if(id==='gs-72-miliastra-frostfeather'){delete event.datePrecision;delete event.lastDay;}
+}
+
+const ffReview20261108={checked:REVIEW_CHECKED_20261108,source:'https://ff.web.sdo.com/web8/index.html#/newstab/newscont/395256',official:'https://ff.web.sdo.com/web8/index.html#/newstab/newscont/395256',verification:'FF14国服官方11月10日全区全服更新维护公告',externalActivity:false};
+addReviewedEvent20261025('ff14','ff14-758-maintenance','7.58版本 · 全区全服更新维护','7.58更新维护','版本维护','2026-11-10T10:00:00+08:00','2026-11-10T18:00:00+08:00','全区全服停机维护并更新至7.58版本。','官方预计11月10日10:00至18:00维护；维护结束时间可能视作业进度调整，以官方后续公告和服务器实际开放为准。','7.58版本内容开放','无需参与；维护期间无法登录游戏',{...ffReview20261108,dateLabel:'11月10日 10:00 — 18:00',deadlineLabel:'11/10 18:00'});
+const gold88={checked:REVIEW_CHECKED_20261108,source:'https://actff1.web.sdo.com/20241130_GoldTrial/',official:'https://actff1.web.sdo.com/20241130_GoldTrial/',crossSource:'https://ff14.cafe/',verification:'国服官方第88期实时配置（GetCurrentActive）与规则核对；背水咖啡厅交叉核对',externalActivity:true};
+addReviewedEvent20261025('ff14','ff14-gold88-duty','黄金的试炼 第88期 · 万魔殿 炼净之狱4','黄金试炼挑战','网页活动挑战','2026-11-06T13:00:00+08:00','2026-11-09T00:00:00+08:00','以等级同步方式通关万魔殿 炼净之狱4，取得本期网页登记资格。','指定副本完成期至11月8日23:59:59；完成后数据通常需要数分钟同步。副本通关不会自动领奖，仍须在11月12日13:00前到官方专题登记；幸运奖励于同日13:00起抽取。','登记后领取金碟币铜卡×2，并参与额外奖励抽取','正式账号，解锁90级副本万魔殿 炼净之狱4，并以等级同步方式完成',{...gold88,dateLabel:'11月6日 13:00 — 11月8日 23:59:59'});
+addReviewedEvent20261025('ff14','ff14-gold88-register','黄金的试炼 第88期 · 网页登记','黄金试炼登记','网页领奖','2026-11-06T13:00:00+08:00','2026-11-12T13:00:00+08:00','用已完成指定副本的角色在专题页面查询并登记。','每账号每期登记一次；登记截止晚于副本挑战截止，与主体活动关联，不单独计入首页统计。','金碟币铜卡×2及额外奖励抽取资格','已在本期挑战期内完成指定副本，并用对应角色登记',{...gold88,parentEvent:'ff14-gold88-duty',dateLabel:'11月6日 13:00 — 11月12日 13:00',deadlineLabel:'11/12 13:00'});
+addReviewedEvent20261025('ff14','ff14-gold88-draw','黄金的试炼 第88期 · 幸运奖励抽取','黄金试炼开奖','开奖节点','2026-11-12T13:00:00+08:00',null,'官方从本期成功登记账号中抽取额外奖励。','开奖从11月12日13:00开始；虚拟奖励进入奖励仓库，实物获奖者须按专题规则及时填写收货信息。','幸运奖励，以实际抽取结果为准','在第88期登记截止前成功登记',{...gold88,parentEvent:'ff14-gold88-duty',milestone:true,dateLabel:'11月12日 13:00 起抽取'});
+
+const endfieldReview20261108={checked:REVIEW_CHECKED_20261108,source:'https://www.taptap.cn/moment/867108949059293273',official:'https://endfield.hypergryph.com/news',verification:'终末地国服官方入驻账号11月5日调期公告',externalActivity:false};
+// No new guessed maintenance record: unknown next-version dates remain unknown.
+
+const arkReview20261108={checked:REVIEW_CHECKED_20261108,source:'https://ak.hypergryph.com/news/0787',official:'https://ak.hypergryph.com/news/0787',verification:'国服官方2026感谢庆典第二部分公告与排期图核对',externalActivity:false};
+addReviewedEvent20261025('arknights','ark-garrison-outfit-retrospective','卫戍时装回顾展','卫戍时装回顾展','限时时装活动','2026-11-08T16:00:00+08:00','2026-11-22T04:00:00+08:00','参与卫戍时装回顾展，按规则抽取未拥有的指定复刻时装。','活动至11月22日03:59。最多可进行6次回顾；每次消耗的合成玉和可获得范围以活动界面为准。若已拥有全部回顾展时装，则按公告规则获得时装回顾凭证。','卫戍回顾展指定时装；全收集账号获得对应回顾凭证','通关主线1-10并解锁活动界面，使用合成玉参与',{...arkReview20261108,dateLabel:'11月8日 16:00 — 11月22日 03:59'});
+addReviewedEvent20261025('arknights','ark-thanks-outfits-part2','感谢庆典 · 复刻时装第二批','感谢庆典时装第二批','限时商城','2026-11-16T16:00:00+08:00','2026-11-30T04:00:00+08:00','在时装商店购买第二批复刻时装。','本批11月16日16:00上架，11月30日03:59下架；与11月1日开放的首批时装窗口分别记录。','命途迭代系列「夜之终局」弑君者、0011系列「幻火」止颂','解锁采购中心，使用至纯源石购买',{...arkReview20261108,dateLabel:'11月16日 16:00 — 11月30日 03:59'});
+
+const fgoOfficial20261108={checked:REVIEW_CHECKED_20261108,official:'https://game.bilibili.com/fgo/news.html',verification:'FGO简中国服官方公告正文与国服时间逐项核对',externalActivity:false};
+addReviewedEvent20261025('fgo','fgo-billion-download-campaign','全世界1亿下载突破纪念活动','1亿下载纪念','纪念活动','2026-11-07T20:00:00+08:00','2026-11-21T14:00:00+08:00','参与全世界1亿下载突破纪念任务、养成支援与关卡优惠。','总体窗口至11月21日13:59。限时任务至11月30日23:59，领取至12月7日23:59；★5从者兑换券至12月14日23:59可兑换，选定从者须在12月31日23:59前达到灵基再临1次、Lv.60且牵绊Lv.5后正式加入。公告中的累计登录与回归登录奖励按统一签到规则不展示。','★5从者兑换券、圣晶石、呼符、概念礼装及养成优惠','通关特异点F后参与；各任务与兑换另有主线、等级和牵绊条件',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18566.action',dateLabel:'11月7日 20:00 — 11月21日 13:59',timing:'限时任务至11月30日23:59；任务领奖至12月7日23:59；兑换至12月14日23:59；正式加入条件至12月31日23:59。'});
+addReviewedEvent20261025('fgo','fgo-billion-download-special-quest','全世界1亿下载纪念 · 24小时特别关卡','1亿下载特别关卡','限时关卡','2026-11-07T20:00:00+08:00','2026-11-08T20:00:00+08:00','在24小时开放期内完成纪念特别关卡。','关卡只开放至11月8日19:59，超过时限后无法挑战。','圣晶石×10','通关特异点F 燃烧污染都市 冬木',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18566.action',dateLabel:'11月7日 20:00 — 11月8日 19:59'});
+addReviewedEvent20261025('fgo','fgo-billion-download-mission-claim','全世界1亿下载纪念 · 任务与领奖截止','1亿下载任务领奖','关联领奖','2026-11-07T20:00:00+08:00','2026-12-08T00:00:00+08:00','完成并领取纪念限时任务奖励。','任务完成截止为11月30日23:59，奖励领取截止为12月7日23:59；关联主体活动，不单独显示或计数。','圣晶石、呼符、概念礼装与兑换券等','完成公告所列主线进度与限时任务',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18566.action',parentEvent:'fgo-billion-download-campaign',dateLabel:'11月7日 20:00 — 12月7日 23:59'});
+addReviewedEvent20261025('fgo','fgo-billion-download-ticket-exchange','全世界1亿下载纪念 · ★5兑换截止','1亿下载兑换截止','关联兑换','2026-11-07T20:00:00+08:00','2026-12-15T00:00:00+08:00','使用纪念兑换券选择对象★5从者。','兑换至12月14日23:59；关联主体活动，不单独显示或计数。','公告范围内的1骑★5从者','持有纪念兑换券并在交换所完成选择',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18566.action',parentEvent:'fgo-billion-download-campaign',dateLabel:'11月7日 20:00 — 12月14日 23:59'});
+addReviewedEvent20261025('fgo','fgo-billion-download-formal-join','全世界1亿下载纪念 · ★5正式加入截止','1亿下载正式加入','关联任务','2026-11-07T20:00:00+08:00','2027-01-01T00:00:00+08:00','让已兑换的★5从者满足正式加入条件。','须在12月31日23:59前让对象从者完成灵基再临1次、达到Lv.60且牵绊Lv.5；关联主体活动，不单独显示或计数。','选定★5从者正式加入','已完成兑换，并达到公告所列等级、再临与牵绊条件',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18566.action',parentEvent:'fgo-billion-download-campaign',dateLabel:'11月7日 20:00 — 12月31日 23:59'});
+addReviewedEvent20261025('fgo','fgo-billion-download-summon','全世界1亿下载纪念推荐召唤','1亿下载纪念召唤','推荐召唤','2026-11-07T20:00:00+08:00','2026-11-21T14:00:00+08:00','参与全世界1亿下载纪念推荐召唤。','21个召唤卡池依公告日程轮换，涵盖梅林等42骑对象从者；各卡池独立计算确定召唤，详细组合与时段以游戏内召唤详情为准。','公告所列42骑对象从者及概念礼装','解锁召唤功能，持有圣晶石或呼符',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18567.action',dateLabel:'11月7日 20:00 — 11月21日 13:59'});
+addReviewedEvent20261025('fgo','fgo-lb7-review','Final Order Project · 第2部回顾纪念 第7章篇','终章回顾第7章','主线通关应援','2026-11-10T19:00:00+08:00','2026-11-17T19:00:00+08:00','Lostbelt No.7自由关卡在首次通关前AP消耗降为0。','只记录国服已公告的一周窗口，不外推后续章节。','Lostbelt No.7自由关卡首次通关前AP消耗0','推进并解锁Lostbelt No.7对应自由关卡',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18561.action',dateLabel:'11月10日 19:00 — 11月17日 18:59'});
+addReviewedEvent20261025('fgo','fgo-road-to-final-lb7-tezcatlipoca','Road to 终章 · 第7章篇 特斯卡特利波卡推荐召唤','终章特斯卡特利波卡召唤','推荐召唤','2026-11-10T19:00:00+08:00','2026-11-17T14:00:00+08:00','★5特斯卡特利波卡、★4尼托克丽丝等第7章关联对象概率提升。','第7章通关后可解锁故事召唤概念礼装；详细概率与确定召唤规则以游戏内召唤详情为准。','概率提升从者与3种限时概念礼装','解锁召唤功能，持有圣晶石或呼符',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18562.action',dateLabel:'11月10日 19:00 — 11月17日 13:59'});
+addReviewedEvent20261025('fgo','fgo-archer-coronation-prelude','Archer戴冠战开幕前夕纪念活动','Archer戴冠战应援','养成应援','2026-11-05T19:00:00+08:00','2026-11-21T14:00:00+08:00','利用Archer职阶养成、每日任务与关卡AP优惠准备戴冠战。','Archer每日任务至11月19日23:59，任务领取至11月26日23:59，兑换券至12月3日23:59可用；公告中的登录奖励与试用关卡按统一排除规则不展示。','Archer训练兑换券、养成成功率3倍、经验2倍与AP减半','按各任务和关卡的解锁条件参与',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18542.action',dateLabel:'11月5日 19:00 — 11月21日 13:59'});
+addReviewedEvent20261025('fgo','fgo-archer-coronation-summon','Archer戴冠战开幕前夕纪念推荐召唤','Archer戴冠战召唤','推荐召唤','2026-11-05T19:00:00+08:00','2026-11-21T14:00:00+08:00','参与Archer职阶纪念推荐召唤。','17个召唤卡池涵盖公告所列42骑Archer；各卡池独立计算确定召唤，详细组合与时段以游戏内为准。','公告所列Archer对象从者','解锁召唤功能，持有圣晶石或呼符',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18543.action',dateLabel:'11月5日 19:00 — 11月21日 13:59'});
+addReviewedEvent20261025('fgo','fgo-lancer-extra-stormpot-zero','Lancer及Extra冠位戴冠战 · 风暴罐0消耗','Lancer/Extra戴冠应援','养成应援','2026-11-05T19:00:00+08:00','2026-11-13T14:00:00+08:00','在Lancer与Extra冠位戴冠战中享受限时风暴罐0消耗支援。','只保留独立的冠位战支援；公告中的登录奖励按统一签到排除规则不展示。','Lancer与Extra冠位戴冠战限时风暴罐0消耗','通关Ordeal Call 0并解锁对应冠位戴冠战',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18545.action',dateLabel:'11月5日 19:00 — 11月13日 13:59'});
+addReviewedEvent20261025('fgo','fgo-lancer-extra-coronation-summon','Lancer及Extra冠位戴冠战推荐召唤','Lancer/Extra冠位召唤','推荐召唤','2026-11-05T19:00:00+08:00','2026-11-13T14:00:00+08:00','参与Lancer与Extra职阶纪念推荐召唤。','77个召唤卡池覆盖公告所列43骑Lancer与80骑Extra；各卡池独立计算确定召唤，详细组合与时段以游戏内为准。','公告所列Lancer与Extra对象从者','解锁召唤功能，持有圣晶石或呼符',{...fgoOfficial20261108,source:'https://api.biligame.com/news/18546.action',dateLabel:'11月5日 19:00 — 11月13日 13:59'});
+
+const genshinReview20261108={checked:REVIEW_CHECKED_20261108,official:'https://ys.mihoyo.com/main/news',verification:'原神国服官方与TapTap官方入驻账号公告、配图核对',externalActivity:false};
+addReviewedEvent20261025('genshin','gs-72-miliastra-shop-discount','千星商城 · 7.2新装限时折扣','千星商城新装折扣','限时商城','2026-11-04','2026-12-14T04:00:00+08:00','在千星商城以限时折扣购买7.2上新的奇偶装扮。','新装连续上架三个版本；本条只记录7.2版本更新后至12月14日03:59的限时折扣，折扣结束后恢复原价。覆音纪游属于版本例行通行证，不展示。','6套卓越装扮、4套优异装扮及装扮组合折扣','唤醒千星奇域奇偶，持有足够事象凝核',{...genshinReview20261108,source:'https://www.taptap.cn/moment/866642436036755642',startAt:null,startPrecision:'version',dateLabel:'11月4日版本更新后 — 12月14日 03:59'});
+addReviewedEvent20261025('genshin','gs-72-guide-contest','7.2版本攻略征集','7.2攻略征集','社区征集','2026-11-04','2026-12-14T00:00:00+08:00','在官方社区发布符合7.2版本攻略征集规则的原创图文或视频攻略。','投稿至12月13日23:59，评选为12月14日至2027年1月13日，结果于1月14日后公布；领奖与结果提醒保留在主体详情。','一等奖6000原石及周边；另设二等奖、三等奖','图文不少于700字及5张图，或原创视频不少于5分钟；填写正确UID并使用指定子版块与标题格式',{...genshinReview20261108,source:'https://www.taptap.cn/moment/866736107553820005',official:'https://www.taptap.cn/moment/866736107553820005',externalActivity:true,startAt:null,startPrecision:'day',dateLabel:'11月4日 — 12月13日 23:59'});
+addReviewedEvent20261025('genshin','gs-abyss-nov-update','深境螺旋 · 11月轮换','11月深境更新','挑战节点','2026-11-16',null,'官方确认11月16日更新深境螺旋。','第11层强化雷、岩伤害；第12层上半强化月结晶反应伤害、下半提高元素精通。只列开放日，不推算下一期关闭日。','挑战奖励按游戏内层数与星数领取','达到深境螺旋解锁条件',{...genshinReview20261108,source:'https://ys.mihoyo.com/main/news/detail/167205',milestone:true,startAt:null,startPrecision:'day',datePrecision:'day',dateLabel:'11月16日更新 · 仅列开放日'});
+addReviewedEvent20261025('genshin','gs-imaginarium-dec-update','幻想真境剧诗 · 12月轮换','12月幻想真境更新','挑战节点','2026-12-01',null,'官方确认12月1日更新幻想真境剧诗。','本期限用火、水、岩元素角色，开幕角色与祝福以7.2更新说明和游戏内为准；只列开放日，不推算本期关闭日。','挑战奖励及表演诀窍，详见游戏内','满足幻想真境剧诗解锁条件',{...genshinReview20261108,source:'https://ys.mihoyo.com/main/news/detail/167205',milestone:true,startAt:null,startPrecision:'day',datePrecision:'day',dateLabel:'12月1日更新 · 仅列开放日'});
+addReviewedEvent20261025('genshin','gs-abyss-dec-update','深境螺旋 · 12月轮换','12月深境更新','挑战节点','2026-12-16',null,'官方确认12月16日更新深境螺旋。','本期渊月祝福和各层地脉异常以7.2更新说明及游戏内为准；只列开放日，不推算下一期关闭日。','挑战奖励按游戏内层数与星数领取','达到深境螺旋解锁条件',{...genshinReview20261108,source:'https://ys.mihoyo.com/main/news/detail/167205',milestone:true,startAt:null,startPrecision:'day',datePrecision:'day',dateLabel:'12月16日更新 · 仅列开放日'});
+
+for(const e of GAME_EVENTS){
+ if(e.game==='wow'&&e.usCalendar){e.checked=REVIEW_CHECKED_20261108;e.usCalendar={...e.usCalendar,checked:REVIEW_CHECKED_20261108};}
+ if(e.game==='wow'&&e.scheduleRule==='first-sunday-week')e.checked=REVIEW_CHECKED_20261108;
+}
+for(const update of [
+ ['wow','11月8日实际复核WoWDB LIVE与Wowhead美服正式服事件日历：11个周常窗口继续按美服当地周二映射国服同周周四05:00，原始America/Los_Angeles时间与夏令时记录保留；暗月按每月第一个周日开始、持续七个自然日。11月17日周年庆、11月22日感恩节等仅有外服日期的节日继续保留参考标识，不套周常偏移。国服当期团本各难度差异、本期时光副本池及周年内容仍待实际核对。'],
+ ['ff14','11月8日读取国服官方新闻接口与专题实时配置：新增11月10日10:00—18:00的7.58全服更新维护，并补入黄金的试炼第88期万魔殿炼净之狱4；挑战、网页登记与开奖按不同截止关联。8.0维护日期与魔法钥匙关闭时刻仍未公布。'],
+ ['endfield','11月8日读取国服官方调期公告：烟火生缘限时任务确认至11月25日06:00维护前，机密圣所兑换改至12月2日04:00，理智补给改为11月18日04:00至25日04:00；明河寻访节点奖励已补全。下次版本维护日期仍未知的寻访和挑战不推算关闭日。'],
+ ['arknights','11月8日复核感谢庆典第二部分公告：补入卫戍时装回顾展和11月16日复刻时装第二批，细化卫戍寻访6星范围。SideStory、商店、数据契约与寻访继续逐项截止；签到、累计登录、登录赠礼和干员试用继续统一隐藏。'],
+ ['fgo','11月8日同时读取国服1亿下载纪念、第7章回顾、Archer与Lancer/Extra养成应援及全部对应推荐召唤公告；补入★5兑换、正式加入、任务领奖等关联截止，首页仅统计主体。公告中的累计登录、回归登录与试用关卡按统一排除规则不展示。'],
+ ['genshin','11月8日实际读取国服官方图片与TapTap官方入驻账号公告：补齐7.2首期角色/武器祈愿、覆音谐度、雪阵霜庭、绮衣珍赏、千星商城折扣、拾光季投稿和攻略征集精确截止，并新增11月/12月挑战轮换开放日。覆音纪游等版本通行证继续排除；未公布关闭时刻的活动不推算。']
+]){
+ const game=GAMES.find(g=>g.id===update[0]);
+ game.checked=REVIEW_CHECKED_20261108;game.note=update[1];
+}
+
 // Fixed deadlines for weekly resets and announced maintenance dates (UTC+8).
 const STANDARD_DEADLINE_HOURS={wowWeekly:'05:00',endfieldMaintenance:'06:00'};
 for(const e of GAME_EVENTS){
@@ -2969,7 +3108,7 @@ for(const e of GAME_EVENTS){
  const date=wow?e.weeklyResetDate:e.boundaryDate;
  const clock=wow?STANDARD_DEADLINE_HOURS.wowWeekly:STANDARD_DEADLINE_HOURS.endfieldMaintenance;
  e.cutoffBasis='fixed-schedule';
- e.cutoffChecked='2026-10-14';
+ e.cutoffChecked=wow?REVIEW_CHECKED_20261108:'2026-10-14';
  e.endAt=date+'T'+clock+':00+08:00';
  e.end=date;
  delete e.datePrecision;
