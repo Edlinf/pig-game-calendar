@@ -2965,6 +2965,25 @@ for(const update of [
 // to their parent event and therefore do not inflate calendar statistics.
 const REVIEW_CHECKED_20261108='2026-11-08';
 const review20261108Patches={
+ 'gs-anniversary-mail':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-11-04',endAt:'2026-11-04T06:00:00+08:00',
+  source:'https://www.taptap.cn/moment/850784339179343138',official:'https://ys.mihoyo.com/main/news',
+  verification:'国服官方周年赠礼公告；7.2国服更新维护公告核对版本边界',
+  dateLabel:'9月28日 00:00 — 11月4日 06:00 · 7.1版本结束',deadlineLabel:'11/04 06:00',
+  detail:'9月28日至10月1日依次开放四封答谢邮件，每封含原石400；其他附件依次为“呀吼号”列车长、脆弱树脂2、祝圣之霜、迷你列车难题。官方7.2更新公告确认11月4日06:00开始维护，因此7.1版本内的邮件收取资格在该时点结束；已收取邮件仍按邮件自身30天有效期处理。'
+ },
+ 'gs-tcg-forging':{
+  checked:REVIEW_CHECKED_20261108,end:'2026-11-04',endAt:'2026-11-04T06:00:00+08:00',
+  verification:'国服官方入驻账号活动公告；7.2国服更新维护公告核对版本边界',
+  dateLabel:'9月23日7.1版本更新后 — 11月4日 06:00',deadlineLabel:'11/04 06:00',
+  detail:'可选关卡难度、对手生命值及对局回合数，达到积分目标领取奖励。活动持续至7.1版本结束；官方7.2更新公告确认11月4日06:00开始维护，因此本期于该时点归档。'
+ },
+ 'gs-72-update':{
+  checked:REVIEW_CHECKED_20261108,source:'https://www.taptap.cn/moment/866735532548295551',official:'https://ys.mihoyo.com/main/news/detail/167205',
+  verification:'原神国服官方7.2版本更新说明',
+  detail:'官方更新说明确认11月4日06:00开始维护，预计5小时完成；本条仍只作为版本开放日节点展示，不把预计开服时刻当作固定开放时刻，也不生成精确开始倒计时。',
+  dateLabel:'11月4日版本更新 · 维护06:00开始，开放时刻以实际为准'
+ },
  'end-inn':{
   checked:REVIEW_CHECKED_20261108,
   end:'2026-11-25',endAt:'2026-11-25T06:00:00+08:00',
